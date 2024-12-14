@@ -21,27 +21,27 @@
     const items = [
      {
       title: "Home",
-      url: "/",
+      url: "/dash",
       icon: House,
      },
      {
       title: "Instances",
-      url: "/instances",
+      url: "/dash/instances",
       icon: CPU,
      },
      {
       title: "Library",
-      url: "/library",
+      url: "/dash/library",
       icon: Library,
      },
      {
       title: "Subscription",
-      url: "subscription",
+      url: "/dash/subscription",
       icon: CreditCard,
      },
      {
       title: "Settings",
-      url: "/settings",
+      url: "/dash/settings",
       icon: Settings,
      },
     ];

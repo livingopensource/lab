@@ -17,7 +17,7 @@
     <div class="flex h-5 items-center space-x-4 text-sm">
     </div>
     <div>
-      <Button class="float-right" href="/instances/create">
+      <Button class="float-right" href="/dash/instances/create">
         Create
       </Button>
     </div>

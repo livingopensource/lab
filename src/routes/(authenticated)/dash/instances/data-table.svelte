@@ -74,7 +74,7 @@
      </Table.Header>
      <Table.Body>
       {#each table.getRowModel().rows as row (row.id)}
-       <Table.Row data-state={row.getIsSelected() && "selected"} onclick={() => goto(`/instances/${row.getValue("name")}`)} class="cursor-pointer">
+       <Table.Row data-state={row.getIsSelected() && "selected"} onclick={() => goto(`/dash/instances/${row.getValue("name")}`)} class="cursor-pointer">
         {#each row.getVisibleCells() as cell (cell.id)}
          <Table.Cell>
           <FlexRender

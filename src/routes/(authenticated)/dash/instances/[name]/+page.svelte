@@ -266,7 +266,7 @@
 
   onMount(async () => {
     //@ts-ignore
-    if (data.data.instance.status == "Running") {
+    if (data.data.instance.status == "Runining") {
       const { default: RFB } = await import('@novnc/novnc/lib/rfb');
       const consoleRes = await consoleConnection($page.params.name)
       if (!consoleRes.ok) {
@@ -278,7 +278,6 @@
       const consoleData = await consoleRes.json() as operationResponse
       fetch(data.data.operations_url, {mode: "no-cors"})
       .then(res => {
-        console.log(consoleData)
         const secret = consoleData.metadata.metadata.fds[0]
         const url = data.data.operations_url + consoleData.operation + "/websocket?secret=" + secret
         rfb = new RFB(screen, url,{});
