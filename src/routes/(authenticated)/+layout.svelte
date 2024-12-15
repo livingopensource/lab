@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { ModeWatcher } from "mode-watcher";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import AppSidebar from "$lib/components/app-sidebar.svelte";
   import Slash from "lucide-svelte/icons/slash";
@@ -21,7 +20,6 @@
 </script>
 
 <Toaster expand={true} richColors/>
-<ModeWatcher />
 <Sidebar.Provider>
 <AppSidebar />
 <Sidebar.Inset>

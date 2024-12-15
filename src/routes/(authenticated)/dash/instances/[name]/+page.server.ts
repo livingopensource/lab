@@ -24,7 +24,7 @@ export async function load({ params }) {
     const data = await res.json() as instanceResponse;
     return {
         project: project,
-        operations_url: env.WS_URL != "" ? env.WS_URL : env.CLUSTER_URL,
+        operations_url: env.WS_URL,
         instance: data.metadata
     };
 }

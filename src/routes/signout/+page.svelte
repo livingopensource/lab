@@ -1,6 +1,5 @@
 
 <script lang="ts">
-    import { SignIn } from "@auth/sveltekit/components"
     import { Button } from '$lib/components/ui/button/index'
 </script>
 
@@ -32,36 +31,28 @@
 		<div class="relative z-20 mt-auto">
 			<blockquote class="space-y-2">
 				<p class="text-lg">
-					&ldquo;Hands on practical lab environments with disposable virtual machines that have super fast cold starts!&rdquo;
+					<!-- &ldquo;This library has saved me countless hours of work and helped me deliver
+					stunning designs to my clients faster than ever before. Highly
+					recommended!&rdquo; -->
 				</p>
 				<footer class="text-sm">Endless Possibilities</footer>
 			</blockquote>
 		</div>
 	</div>
+	
 	<div class="lg:p-8">
 		<div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
 			<div class="flex flex-col space-y-2 text-center">
-				<h1 class="text-2xl font-semibold tracking-tight">Log In</h1>
+				<h1 class="text-2xl font-semibold tracking-tight">Sign Out</h1>
 				<p class="text-muted-foreground text-sm">
-					Select an authentication provider to log in with
+					Please confirm sign out by clicking the button below
 				</p>
 			</div>
 			<div class="text-center">
-        <Button>
-          <SignIn provider="google" />
-        </Button>
+				<form method="POST">
+					<Button type="submit">Sign Me Out</Button>
+				</form>
       </div>
-			<p class="text-muted-foreground px-8 text-center text-sm">
-				By clicking continue, you agree to our
-				<a href="/terms" class="hover:text-primary underline underline-offset-4">
-					Terms of Service
-				</a>
-				and
-				<a href="/privacy" class="hover:text-primary underline underline-offset-4">
-					Privacy Policy
-				</a>
-				.
-			</p>
 		</div>
 	</div>
 </div>

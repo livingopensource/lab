@@ -1,4 +1,5 @@
 node_modules
+app.yaml
 
 # Application authorization keys
 src/lib/server/tls/mtls/*.pem
