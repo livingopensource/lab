@@ -8,8 +8,10 @@
     import ChevronUp from "lucide-svelte/icons/chevron-up";
     import * as Sidebar from "$lib/components/ui/sidebar/index.js";
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index";
+    import * as Avatar from "$lib/components/ui/avatar/index"
     import type { ComponentProps } from "svelte";
     import { page } from "$app/stores";
+	  import { nickName } from "$lib/helpers/misc";
 
     let {
 		ref = $bindable(null),
@@ -21,27 +23,27 @@
     const items = [
      {
       title: "Home",
-      url: "/",
+      url: "/dash",
       icon: House,
      },
      {
       title: "Instances",
-      url: "/instances",
+      url: "/dash/instances",
       icon: CPU,
      },
      {
       title: "Library",
-      url: "/library",
+      url: "/dash/library",
       icon: Library,
      },
      {
       title: "Subscription",
-      url: "subscription",
+      url: "/dash/subscription",
       icon: CreditCard,
      },
      {
       title: "Settings",
-      url: "/settings",
+      url: "/dash/settings",
       icon: Settings,
      },
     ];
@@ -99,7 +101,11 @@
                   {...props}
                   class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  Username
+                  {$page.data.session?.user?.name ?? "NA"}
+                  <Avatar.Root>
+                    <Avatar.Image src={$page.data.session?.user?.image} alt="user avatar" />
+                    <Avatar.Fallback>{nickName($page.data.session?.user?.name ?? "NA")}</Avatar.Fallback>
+                  </Avatar.Root>
                   <ChevronUp class="ml-auto" />
                 </Sidebar.MenuButton>
               {/snippet}
@@ -109,10 +115,11 @@
               class="w-[--bits-dropdown-menu-anchor-width]"
             >
               <DropdownMenu.Item>
-                <span>Account</span>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item>
-                <span>Sign out</span>
+                <span>
+                  <a href="/signout">
+                   Sign Out
+                  </a>
+                </span>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Root>

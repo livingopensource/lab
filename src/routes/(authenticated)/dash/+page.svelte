@@ -13,7 +13,7 @@ let data: {
 
 </script>
 <svelte:head>
-    <title>Welcome | SwiftCloud Education</title>
+    <title>Welcome | SwiftCloud Anvil</title>
 </svelte:head>
 
 <div class="container py-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-content-evenly">
