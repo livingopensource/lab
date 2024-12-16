@@ -1,5 +1,4 @@
 <script lang="ts">
-     import * as Menubar from "$lib/components/ui/menubar/index"
     let { children } = $props();
 </script>
 
@@ -8,15 +7,10 @@
         <a class="mr-4 flex items-center space-x-2 lg:mr-6" href="/">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 64 64" class="h-6 w-6"><path fill="currentColor" d="M0 20C0 8.954 8.954 0 20 0h24c11.046 0 20 8.954 20 20v24c0 11.046-8.954 20-20 20H20C8.954 64 0 55.046 0 44V20z"></path><path fill="currentColor" class="text-white dark:text-black" d="M31.976 11.96L47.016 42h-6.08l-8.96-18.88L23.056 42h-6.08l15-30.04z"></path></svg>
             <span class="hidden font-bold xl:inline-block">
-                SwiftCloud Anvil
+                Anvil Cloud
             </span>
         </a>
     </div>
-    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 w-9 mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden" id="sidebar-toggle-button" aria-label="Toggle navigation visibility" aria-roledescription="Toggles the website mobile menu" data-state="closed">
-        <div class="hamburger-icon" aria-hidden="true">
-
-        </div>
-    </button>
     
     <div class="ml-auto flex items-center justify-between space-x-2 lg:justify-end">
         <a rel="noreferrer" class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 px-3 text-xs rounded-full" href="/dash">Playground</a>
