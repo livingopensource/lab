@@ -296,7 +296,7 @@
   })
 </script>
 <svelte:head>
-    <link rel="stylesheet" href="/node_modules/@xterm/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="/css/xterm.css" />
     <title>{$page.params.name} Instance | SwiftCloud Education</title>
 </svelte:head>
   
