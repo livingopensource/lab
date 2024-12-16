@@ -308,11 +308,19 @@
         {#if data.data.instance.status == "Stopped"}
         <div><Play onclick={() => {
           powerOn($page.params.name)
-          setTimeout(() => invalidateAll(), 2000)
+          // Refresh the interface data, then wait another 2 seconds
+          // Then re-initialise the terminal
+          setTimeout(() => {
+            invalidateAll()
+            setTimeout(() => {
+              showTerminal(xterminal)
+              invalidateAll()}
+              , 2000)
+          }, 2000)
         }} /></div>
         {/if}
         <Separator orientation="vertical" />
-        <div><Restart /></div>
+        <!-- <div><Restart /></div> -->
         <Separator orientation="vertical" />
         {#if data.data.instance.status == "Running"}
         <div><Stop onclick={() => {

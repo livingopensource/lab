@@ -1,5 +1,7 @@
 node_modules
 app.yaml
+domain-mapping.yaml
+domain-claim.yaml
 
 # Application authorization keys
 src/lib/server/tls/mtls/*.pem

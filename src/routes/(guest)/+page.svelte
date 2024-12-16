@@ -25,7 +25,7 @@
 
 <div class="container py-10">
     {#key index}
-    <h1 transition:slide class="text-black dark:text-white relative mx-0 max-w-[43.5rem] pt-5 md:mx-auto md:px-4 md:py-2 text-left tracking-tighter text-balance md:text-center font-semibold md:text-7xl lg:text-7xl sm:text-7xl text-5xl">The Fun & Easy Way To Learn <span>{greetings[index]}</span></h1>
+        <h1 transition:slide class="text-black dark:text-white relative mx-0 max-w-[43.5rem] pt-5 md:mx-auto md:px-4 md:py-2 text-left tracking-tighter text-balance md:text-center font-semibold md:text-7xl lg:text-7xl sm:text-7xl text-5xl">The Fun & Easy Way To Learn <span>{greetings[index]}</span></h1>
     {/key}
     <div class="grid justify-items-center">
         <p></p>
@@ -34,7 +34,9 @@
     </div>
 
     <div class="grid justify-items-center">
-        <img src={images[index]} alt={greetings[index]} class="object-scale-down h-48 w-96" />
+        {#key index}
+            <img transition:slide src={images[index]} alt="Anvil Cloud" class="object-scale-down h-48" />
+        {/key}
     </div>
     
 </div>

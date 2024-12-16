@@ -20,7 +20,7 @@
       if (f.valid) {
         toast.success(`Creating ${f.data.instanceName} instance`);
         setTimeout(() => {
-          goto("/instances")
+          goto("/dash/instances")
         }, 3000);
       } else {
         toast.error("Please fix the errors in the form.");
