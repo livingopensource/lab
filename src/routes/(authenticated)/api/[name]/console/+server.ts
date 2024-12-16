@@ -19,7 +19,7 @@ export const POST = async ({params}) => {
             }
         }),
         body: JSON.stringify({
-            type: "console",
+            type: "vga",
             width: 80,
             height: 24
         })

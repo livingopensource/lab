@@ -319,9 +319,9 @@
           }, 2000)
         }} /></div>
         {/if}
-        <Separator orientation="vertical" />
+        <!-- <Separator orientation="vertical" /> -->
         <!-- <div><Restart /></div> -->
-        <Separator orientation="vertical" />
+        <!-- <Separator orientation="vertical" /> -->
         {#if data.data.instance.status == "Running"}
         <div><Stop onclick={() => {
           powerOff($page.params.name)
@@ -330,7 +330,7 @@
         {/if}
       </div>
       <div>
-        <Button class="float-right"><Trash /></Button>
+        <!-- <Button class="float-right"><Trash /></Button> -->
       </div>
     </div>
     <br />
