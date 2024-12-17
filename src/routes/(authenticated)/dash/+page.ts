@@ -14,7 +14,7 @@ export function load() {
             },
             {
                 title: 'Subscription',
-                Icon: 'creditcard',
+                Icon: 'subscription',
                 description: 'Subscribe to high quality tutorials and course materials.',
             },
             {

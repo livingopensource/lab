@@ -6,7 +6,7 @@ import type { operationResponse } from '$lib/server/incus.types';
 
 export const POST = async ({params}) => {
     const project = "default"
-    const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}/console?project=${project}`, {
+    const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}/console?project=${project}&wait=10`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const POST = async ({params}) => {
         body: JSON.stringify({
             type: "vga",
             width: 80,
-            height: 24
+            height: 20,
         })
     })
 

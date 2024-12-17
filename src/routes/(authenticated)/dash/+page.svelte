@@ -6,6 +6,7 @@ import CreditCard from "lucide-svelte/icons/credit-card"
 import Cpu from "lucide-svelte/icons/cpu"
 import Settings from "lucide-svelte/icons/settings"
 import Home from "lucide-svelte/icons/home"
+import { goto } from "$app/navigation";
 
 let data: {
 	data: PageData
@@ -18,7 +19,12 @@ let data: {
 
 <div class="container py-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-content-evenly">
     {#each data.data.info as info}
-        <div>
+        <button
+            type="button"
+            onclick={() => goto(`/dash/${info.Icon}`)}
+            onkeydown={(e) => e.key === 'Enter' && goto(`/dash/${info.Icon}`)}
+            class="text-left w-full"
+        >
             <Card.Root>
                 <Card.Header>
                     <Card.Title>{info.title}</Card.Title>
@@ -31,13 +37,13 @@ let data: {
                       <Library />
                       {:else if info.Icon == "settings"}
                       <Settings />
-                      {:else if info.Icon == "creditcard"}
+                      {:else if info.Icon == "subscription"}
                       <CreditCard />
                       {:else}
                       <Home />
                     {/if}
                 </Card.Content>
             </Card.Root>
-        </div>
+        </button>
     {/each}
 </div>

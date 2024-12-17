@@ -279,7 +279,10 @@
       fetch(data.data.operations_url, {mode: "no-cors"})
       .then(res => {
         const secret = consoleData.metadata.metadata.fds[0]
+        const control = consoleData.metadata.metadata.fds.control
         const url = data.data.operations_url + consoleData.operation + "/websocket?secret=" + secret
+        const controlUrl = data.data.operations_url + consoleData.operation + "/websocket?secret=" + control
+        new WebSocket(controlUrl)
         rfb = new RFB(screen, url,{});
         rfb.addEventListener("connect",  ()=>{console.log("connected")});
         rfb.addEventListener("disconnect", ()=>{console.log("disconnect")});
@@ -352,6 +355,8 @@
             </Card.Header>
             <Card.Content>
               <div class="grid grid-cols-2 gap-4">
+                <div>Name</div>
+                <div>{data.data.instance.name}</div>
                 <div>OS</div>
                 <div>{data.data.instance.config["image.os"]}</div>
                 <div>Release</div>

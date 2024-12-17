@@ -40,7 +40,7 @@ export async function execConnection(instance: string) {
     })
 
     if (!resp.ok) {
-        json(400, {})
+        return json(400, {})
     }
     const data = await resp.json() as operationResponse
     return json(data)
@@ -52,7 +52,7 @@ export async function consoleConnection(instance: string) {
     })
 
     if (!resp.ok) {
-        json(400, {})
+        return json(400, {})
     }
     const data = await resp.json() as operationResponse
     return json(data)
