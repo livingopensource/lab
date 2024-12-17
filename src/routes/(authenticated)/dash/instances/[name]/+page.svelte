@@ -2,13 +2,10 @@
   import type { PageServerData } from "./$types";
   import * as Tabs from "$lib/components/ui/tabs/index";
   import Play from "lucide-svelte/icons/play";
-  import Restart from "lucide-svelte/icons/rotate-cw";
   import Stop from "lucide-svelte/icons/square";
-  import Trash from "lucide-svelte/icons/trash";
   import { page } from "$app/stores";
 	import { Separator } from "$lib/components/ui/separator";
-	import Button from "$lib/components/ui/button/button.svelte";
-  import {powerOn, powerOff, execConnection, consoleConnection} from "$lib/helpers/instance.client";
+  import {powerOn, powerOff, execConnection } from "$lib/helpers/instance.client";
 	import { goto, invalidateAll } from "$app/navigation";
 	import { toast } from "svelte-sonner";
 	import type { operationResponse } from "$lib/server/incus.types";
@@ -66,24 +63,30 @@
       }
       const termData = await termReq.json() as operationResponse
       // Check if we are able to connect to backend service
-      fetch(data.data.operations_url, {mode: "no-cors"})
-      .then(resp => {
-        // toast.success("It works, we are able to connect to websocket")
-        var term = new xterm.Terminal({
-          screenKeys: true,
-          useStyle: true,
-          cursorBlink: true,
-          fullscreenWin: true,
-          maximizeWin: true,
-          screenReaderMode: true,
-          cols: 128,
+      if (data.data?.operations_url) {
+        fetch(data.data.operations_url, {mode: "no-cors"})
+        .then(resp => {
+          // toast.success("It works, we are able to connect to websocket")
+          var term = new xterm.Terminal({
+            screenKeys: true,
+            useStyle: true,
+            cursorBlink: true,
+            fullscreenWin: true,
+            maximizeWin: true,
+            screenReaderMode: true,
+            cols: 128,
+          })
+          term.open(xterminal);
+          execConsoleConnect(termData, term)
         })
-        term.open(xterminal);
-        execConsoleConnect(termData, term)
-      })
-      .catch(err => toast.error("Unable to connect to websocket server", {
-        description: "Unable to connect to websocket server, "+err.message
-      }))
+        .catch(err => toast.error("Unable to connect to websocket server", {
+          description: "Unable to connect to websocket server, "+err.message
+        }))
+      } else {
+        toast.error("Unable to connect to websocket server", {
+          description: "Operations URL is not available"
+        })
+      }
     }
 
     function convertArrayBuffer2String(buf: AllowSharedBufferSource | undefined) {
@@ -264,43 +267,11 @@
     }
   })
 
-  onMount(async () => {
-    //@ts-ignore
-    if (data.data.instance.status == "Runining") {
-      const { default: RFB } = await import('@novnc/novnc/lib/rfb');
-      const consoleRes = await consoleConnection($page.params.name)
-      if (!consoleRes.ok) {
-        toast.error("Unable to connect to instance console", {
-          description: "Unable to connect to instance console, failure to connect"
-        })
-        return
-      }
-      const consoleData = await consoleRes.json() as operationResponse
-      fetch(data.data.operations_url, {mode: "no-cors"})
-      .then(res => {
-        const secret = consoleData.metadata.metadata.fds[0]
-        const control = consoleData.metadata.metadata.fds.control
-        const url = data.data.operations_url + consoleData.operation + "/websocket?secret=" + secret
-        const controlUrl = data.data.operations_url + consoleData.operation + "/websocket?secret=" + control
-        new WebSocket(controlUrl)
-        rfb = new RFB(screen, url,{});
-        rfb.addEventListener("connect",  ()=>{console.log("connected")});
-        rfb.addEventListener("disconnect", ()=>{console.log("disconnect")});
-        rfb.addEventListener("credentialsrequired", ()=>{console.log("credentials required")});
-        rfb.addEventListener("desktopname", ()=>{ console.log("desktop name")});
-      })
-      .catch(err => {
-        toast.error("Unable to connect to instance console", {
-          description: "Unable to connect to instance console,"+err.message
-        })
-        return
-      })
-    }
-  })
+  onMount(async () => {})
 </script>
 <svelte:head>
     <link rel="stylesheet" href="/css/xterm.css" />
-    <title>{$page.params.name} Instance | SwiftCloud Education</title>
+    <title>{$page.params.name} Instance | Anvil Cloud</title>
 </svelte:head>
   
   <div class="container py-10">
@@ -345,7 +316,6 @@
           <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
           <Tabs.Trigger value="terminal">Terminal</Tabs.Trigger>
           <Tabs.Trigger value="lesson">Lessons</Tabs.Trigger>
-          <Tabs.Trigger value="console">Console</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="overview">
           <Card.Root>
@@ -548,9 +518,6 @@
             </div>
             <div></div>
           </div>
-        </Tabs.Content>
-        <Tabs.Content value="console">
-          <div id="screen" bind:this={screen}></div>
         </Tabs.Content>
       </Tabs.Root>
     </div>

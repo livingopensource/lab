@@ -3,9 +3,14 @@ import {fetch, Agent} from 'undici';
 import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import type { operationResponse } from '$lib/server/incus.types';
+import { hash } from '$lib/server/utils.js';
 
-export const PUT = async ({url, params}) => {
-    const project = "default"
+export const PUT = async ({locals, url, params}) => {
+    const session = await locals.auth()
+    if (session == null) {
+        return json(403, {})
+    }
+    const project = hash(session?.user?.email ?? "") ?? "none";
     const state = url.searchParams.get("state")
     if (state != null) {
         const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}/state?project=${project}`, {

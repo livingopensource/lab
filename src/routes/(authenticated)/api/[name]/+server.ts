@@ -3,9 +3,14 @@ import {fetch, Agent} from 'undici';
 import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import type { operationResponse } from '$lib/server/incus.types';
+import { hash } from '$lib/server/utils';
 
-export const DELETE = async ({params}) => {
-    const project = "default"
+export const DELETE = async ({locals, params}) => {
+    const session = await locals.auth()
+    if (!session) {
+        return json(403, {})
+    }
+    const project = hash(session?.user?.email ?? "") ?? "none";
     const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}?project=${project}`, {
         method: 'DELETE',
         headers: {
@@ -36,9 +41,13 @@ export const DELETE = async ({params}) => {
     })
 }
 
-export const PUT = async ({url, params}) => {
+export const PUT = async ({locals, url, params}) => {
     const name = url.searchParams.get("name")
-    const project = "default"
+    const session = await locals.auth()
+    if (!session) {
+        return json(403, {})
+    }
+    const project = hash(session?.user?.email ?? "") ?? "none";
     const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}?project=${project}`, {
         method: 'POST',
         headers: {

@@ -3,10 +3,12 @@ import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import type { instanceResponse } from "$lib/server/incus.types";
 import { error } from '@sveltejs/kit';
+import { hash } from '$lib/server/utils';
 
-export async function load({ params }) {
+export async function load({ params, parent }) {
+    const { session } = await parent()
     const name = params.name;
-    const project = "default";
+    const project = hash(session.user?.email ?? "") ?? "none";
     const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${name}?recursion=3&project=${project}`, {
         dispatcher: new Agent({
             connect: {

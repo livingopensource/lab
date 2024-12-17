@@ -3,9 +3,14 @@ import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import { json } from '@sveltejs/kit';
 import type { operationResponse } from '$lib/server/incus.types';
+import { hash } from '$lib/server/utils';
 
-export const POST = async ({params}) => {
-    const project = "default"
+export const POST = async ({locals, params}) => {
+    const session = await locals.auth()
+    if (!session) {
+        return json(403, {})
+    }
+    const project = hash(session?.user?.email ?? "") ?? "none";
     const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}/exec?project=${project}&wait=10`, {
         method: 'POST',
         headers: {

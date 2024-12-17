@@ -87,7 +87,7 @@
       {:else}
        <Table.Row>
         <Table.Cell colspan={columns.length} class="h-24 text-center">
-         No results.
+         You don't have any instances yet.
         </Table.Cell>
        </Table.Row>
       {/each}
