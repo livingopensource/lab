@@ -39,6 +39,10 @@ export const actions = {
             }),
             body: JSON.stringify({
                 name: form.data.instanceName,
+                "config": {
+                  "limits.cpu": "1",
+                  "limits.memory": "1GiB",
+                },
                 "devices": {
                   "root": {
                     "path": "/",
