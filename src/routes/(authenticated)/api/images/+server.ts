@@ -4,9 +4,12 @@ import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import type { imagesResponse } from '$lib/server/incus.types';
 
-export const GET = async () => {
-    const project = "default"
-    const res = await fetch(`${env.CLUSTER_URL}/1.0/images?project=${project}&recursion=1`, {
+export const GET = async ({locals}) => {
+    const session = await locals.auth()
+    if (session == null) {
+        return json(403, {})
+    }
+    const res = await fetch(`${env.CLUSTER_URL}/1.0/images?filter=&recursion=1`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

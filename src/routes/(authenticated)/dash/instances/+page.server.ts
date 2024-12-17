@@ -4,9 +4,12 @@ import * as fs from 'node:fs';
 import type { instancesResponse, operationResponse } from '$lib/server/incus.types';
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
+import { hash } from '$lib/server/utils';
 
-export async function load() {
-    const res = await fetch(`${env.CLUSTER_URL}/1.0/instances?recursion=2`, {
+export async function load({parent}) {
+    const { session } = await parent()
+    const project = hash(session.user?.email ?? "")  ?? "none"
+    const res = await fetch(`${env.CLUSTER_URL}/1.0/instances?project=${project}&recursion=2`, {
         dispatcher: new Agent({
             connect: {
                 cert: fs.readFileSync(env.CERT),
@@ -22,16 +25,17 @@ export async function load() {
 
     const data = await res.json() as instancesResponse;
     return {
-        project: "default",
+        project: project,
         instances: data.metadata
     };
 }
 
 export const actions = {
-    start: async ({ request }) => {
+    start: async ({ request, locals }) => {
+        const session = await locals.auth()
         const formData = await request.formData();
         const instance = formData.get('instance');
-        const project = "default";
+        const project = hash(session?.user?.email ?? "") ?? "none";
         const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${instance}/state?project=${project}`, {
             method: 'PUT',
             headers: {
@@ -78,10 +82,11 @@ export const actions = {
             success: false,
         };
     },
-    stop: async ({ request }) => {
+    stop: async ({ request, locals }) => {
+        const session = await locals.auth()
         const formData = await request.formData();
         const instance = formData.get('instance');
-        const project = "default";
+        const project = hash(session?.user?.email ?? "") ?? "none";
         const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${instance}/state?project=${project}`, {
             method: 'PUT',
             headers: {
@@ -126,10 +131,11 @@ export const actions = {
             success: false,
         };
     },
-    delete: async ({ request }) => {
+    delete: async ({ request, locals }) => {
+        const session = await locals.auth()
         const formData = await request.formData();
         const instance = formData.get('instance');
-        const project = "default";
+        const project = hash(session?.user?.email ?? "") ?? "none";
         const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${instance}?project=${project}`, {
             method: 'DELETE',
             headers: {

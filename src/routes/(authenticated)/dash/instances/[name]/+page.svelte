@@ -66,24 +66,30 @@
       }
       const termData = await termReq.json() as operationResponse
       // Check if we are able to connect to backend service
-      fetch(data.data.operations_url, {mode: "no-cors"})
-      .then(resp => {
-        // toast.success("It works, we are able to connect to websocket")
-        var term = new xterm.Terminal({
-          screenKeys: true,
-          useStyle: true,
-          cursorBlink: true,
-          fullscreenWin: true,
-          maximizeWin: true,
-          screenReaderMode: true,
-          cols: 128,
+      if (data.data?.operations_url) {
+        fetch(data.data.operations_url, {mode: "no-cors"})
+        .then(resp => {
+          // toast.success("It works, we are able to connect to websocket")
+          var term = new xterm.Terminal({
+            screenKeys: true,
+            useStyle: true,
+            cursorBlink: true,
+            fullscreenWin: true,
+            maximizeWin: true,
+            screenReaderMode: true,
+            cols: 128,
+          })
+          term.open(xterminal);
+          execConsoleConnect(termData, term)
         })
-        term.open(xterminal);
-        execConsoleConnect(termData, term)
-      })
-      .catch(err => toast.error("Unable to connect to websocket server", {
-        description: "Unable to connect to websocket server, "+err.message
-      }))
+        .catch(err => toast.error("Unable to connect to websocket server", {
+          description: "Unable to connect to websocket server, "+err.message
+        }))
+      } else {
+        toast.error("Unable to connect to websocket server", {
+          description: "Operations URL is not available"
+        })
+      }
     }
 
     function convertArrayBuffer2String(buf: AllowSharedBufferSource | undefined) {
