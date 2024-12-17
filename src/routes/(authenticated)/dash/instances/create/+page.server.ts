@@ -2,19 +2,54 @@ import type { Actions, PageServerLoad } from './$types';
 import {fetch, Agent} from 'undici';
 import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
-import type { operationResponse } from '$lib/server/incus.types';
+import type { operationResponse, projectsResponse } from '$lib/server/incus.types';
 import { superValidate } from "sveltekit-superforms";
 import { formSchema } from "./schema";
 import { zod } from "sveltekit-superforms/adapters";
-import { fail } from '@sveltejs/kit';
-import { hash } from '$lib/server/utils';
+import { fail, redirect } from '@sveltejs/kit';
+import { countInstances, hash } from '$lib/server/utils';
 
-export const load: PageServerLoad = async () => {
+let canCreate = false;
+
+export const load: PageServerLoad = async ({locals}) => {
+  const session = await locals.auth()
+  if (!session) {
+    throw redirect(303, '/signin')
+  }
+  try {
+    const project = await fetch(`${env.CLUSTER_URL}/1.0/projects/${hash(session.user?.email ?? "")}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      dispatcher: new Agent({
+        connect: {
+          cert: fs.readFileSync(env.CERT),
+          key: fs.readFileSync(env.KEY),
+          rejectUnauthorized: false,
+        },
+      }),
+    }).then((res) => res.json()) as projectsResponse
+    const instanceCount = Number(project.metadata.config["limits.instances"]);
+    const instanceCountUsed = countInstances(project.metadata.used_by);
+    if (instanceCountUsed >= instanceCount) {
+      canCreate = false;
+    } else {
+    canCreate = true;
+    }
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err.message);
+    } else {
+      console.log('An unknown error occurred');
+    }
+    canCreate = false;
+  }
   return {
+    canCreate: canCreate,
     form: await superValidate(zod(formSchema)),
   };
 };
-
 export const actions = {
 	default: async (event) => {
         const session = await event.locals.auth()

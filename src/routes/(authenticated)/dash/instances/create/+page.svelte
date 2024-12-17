@@ -49,6 +49,8 @@
       }) as [typeof fetchedImages.metadata[0]]
     };
   })
+
+  console.log(data)
 </script>
 
 
@@ -105,7 +107,7 @@
           </Form.Description>
           <Form.FieldErrors />
         </Form.Field>
-        <Form.Button type="submit">Create</Form.Button>
+        <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
       </form>
     </div>
 </div>
