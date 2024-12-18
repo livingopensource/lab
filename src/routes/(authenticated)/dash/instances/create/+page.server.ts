@@ -82,7 +82,7 @@ export const actions = {
                   "root": {
                     "path": "/",
                     "pool": "default",
-                    "size": "10GB",
+                    //"size": "10GB",
                     "type": "disk"
                   }
                 },
