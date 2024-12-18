@@ -1,21 +1,21 @@
 <script lang="ts">
-    import CreditCard from "lucide-svelte/icons/credit-card";
-    import House from "lucide-svelte/icons/house";
-    import CPU from "lucide-svelte/icons/cpu";
-    import Library from "lucide-svelte/icons/library-big";
-    import Settings from "lucide-svelte/icons/settings";
-    import SwiftCloud from "lucide-svelte/icons/cloud";
-    import ChevronUp from "lucide-svelte/icons/chevron-up";
-    import LogOut from "lucide-svelte/icons/log-out";
-    import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-    import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index";
-    import * as Avatar from "$lib/components/ui/avatar/index"
-    import type { ComponentProps } from "svelte";
-    import { page } from "$app/stores";
-	  import { nickName } from "$lib/helpers/misc";
+  import CreditCard from "lucide-svelte/icons/credit-card";
+  import House from "lucide-svelte/icons/house";
+  import CPU from "lucide-svelte/icons/cpu";
+  import Library from "lucide-svelte/icons/library-big";
+  import Settings from "lucide-svelte/icons/settings";
+  import SwiftCloud from "lucide-svelte/icons/cloud";
+  import ChevronUp from "lucide-svelte/icons/chevron-up";
+  import LogOut from "lucide-svelte/icons/log-out";
+  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index";
+  import * as Avatar from "$lib/components/ui/avatar/index"
+  import type { ComponentProps } from "svelte";
+  import { page } from "$app/stores";
+	import { nickName } from "$lib/helpers/misc";
 	import { toggleMode } from "mode-watcher";
 
-    let {
+  let {
 		ref = $bindable(null),
 		collapsible = "icon",
 		...restProps
