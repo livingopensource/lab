@@ -54,12 +54,11 @@
    </script>
     
    <Sidebar.Root bind:ref {collapsible} {...restProps}>
-    <Sidebar.Header class="dark:bg-black bg-white">
-     <SwiftCloud class="text-4xl"/>
+    <Sidebar.Header class="dark:bg-black bg-gray-100">
+     <SwiftCloud class="text-4xl"/> SwiftCloud Labs
     </Sidebar.Header>
-    <Sidebar.Content class="dark:bg-black bg-white">
+    <Sidebar.Content class="dark:bg-black bg-gray-100">
      <Sidebar.Group>
-      <Sidebar.GroupLabel>Playground</Sidebar.GroupLabel>
       <Sidebar.GroupContent>
        <Sidebar.Menu>
         {#each items as item (item.title)}
@@ -97,7 +96,7 @@
       </Sidebar.GroupContent>
      </Sidebar.Group>
     </Sidebar.Content>
-    <Sidebar.Footer class="dark:bg-black bg-white">
+    <Sidebar.Footer class="dark:bg-black bg-gray-100">
       <Sidebar.Menu>
         <Sidebar.MenuItem>
           <DropdownMenu.Root>

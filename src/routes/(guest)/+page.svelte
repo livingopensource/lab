@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-    <title>Welcome | Anvil Cloud</title>
+    <title>Welcome | SwiftCloud Labs</title>
 </svelte:head>
 
 <div class="container py-10">

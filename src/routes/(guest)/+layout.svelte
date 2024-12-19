@@ -1,14 +1,15 @@
 <script lang="ts">
     import { toggleMode } from "mode-watcher";
+    import SwiftCloud from "lucide-svelte/icons/cloud";
     let { children } = $props();
 </script>
 
 <div class="container flex h-14 max-w-screen-2xl items-center px-4 lg:px-8">
     <div class="mr-4 hidden lg:flex">
         <a class="mr-4 flex items-center space-x-2 lg:mr-6" href="/">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 64 64" class="h-6 w-6"><path fill="currentColor" d="M0 20C0 8.954 8.954 0 20 0h24c11.046 0 20 8.954 20 20v24c0 11.046-8.954 20-20 20H20C8.954 64 0 55.046 0 44V20z"></path><path fill="currentColor" class="text-white dark:text-black" d="M31.976 11.96L47.016 42h-6.08l-8.96-18.88L23.056 42h-6.08l15-30.04z"></path></svg>
+            <SwiftCloud class="text-4xl"/>
             <span class="hidden font-bold xl:inline-block">
-                Anvil Cloud
+                SwiftCloud Labs
             </span>
         </a>
     </div>

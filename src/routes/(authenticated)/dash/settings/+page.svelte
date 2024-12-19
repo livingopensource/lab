@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Settings | SwiftCloud Education</title>
+    <title>Settings | SwiftCloud Labs</title>
 </svelte:head>
 
 <div class="container">

@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Library | SwiftCloud Education</title>
+    <title>Library | SwiftCloud Labs</title>
 </svelte:head>
 
 <div class="container">

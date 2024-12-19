@@ -271,7 +271,7 @@
 </script>
 <svelte:head>
     <link rel="stylesheet" href="/css/xterm.css" />
-    <title>{$page.params.name} Instance | Anvil Cloud</title>
+    <title>{$page.params.name} Instance | SwiftCloud Labs</title>
 </svelte:head>
   
   <div class="container py-10">

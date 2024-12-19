@@ -9,7 +9,7 @@
   } = $props()
 </script>
 <svelte:head>
-    <title>Instances | SwiftCloud Education</title>
+    <title>Instances | SwiftCloud Labs</title>
 </svelte:head>
 
 <div class="container py-10">
