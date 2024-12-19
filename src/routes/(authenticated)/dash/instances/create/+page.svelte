@@ -11,6 +11,7 @@
 	import { toast } from "svelte-sonner";
 	import * as Select from "$lib/components/ui/select/index";
 	import { goto } from "$app/navigation";
+  import Warning from "lucide-svelte/icons/triangle-alert";
  
   export let data
  
@@ -49,13 +50,11 @@
       }) as [typeof fetchedImages.metadata[0]]
     };
   })
-
-  console.log(data)
 </script>
 
 
 <svelte:head>
-    <title>Create Instance | SwiftCloud Education</title>
+    <title>Create Instance | SwiftCloud Labs</title>
 </svelte:head>
 
 <div class="container py-10">
@@ -71,7 +70,7 @@
           <Form.Control>
             {#snippet children({ props })}
               <Form.Label>Name</Form.Label>
-              <Input {...props} bind:value={$formData.instanceName} />
+              <Input {...props} bind:value={$formData.instanceName} disabled={!data.canCreate} />
             {/snippet}
           </Form.Control>
           <Form.Description>The instance name.</Form.Description>
@@ -101,13 +100,17 @@
             {/snippet}
           </Form.Control>
           <Form.Description>
-            You can view available images from the <a href="/images"
-              >images section</a
-            >.
+            Select an operating system to use with your instance.
           </Form.Description>
           <Form.FieldErrors />
         </Form.Field>
         <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
+        {#if !data.canCreate}
+          <div class="flex gap-2">
+            <div class="my-5"><Warning /></div>
+            <div><p class="text-sm text-foreground m-5"> {data.message} </p></div>
+          </div>
+        {/if}
       </form>
     </div>
 </div>

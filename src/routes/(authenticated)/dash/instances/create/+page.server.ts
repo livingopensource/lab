@@ -10,6 +10,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { countInstances, hash } from '$lib/server/utils';
 
 let canCreate = false;
+let message = "You do not have have an active subscription, please contact info@livingopensource.org";
 
 export const load: PageServerLoad = async ({locals}) => {
   const session = await locals.auth()
@@ -34,6 +35,7 @@ export const load: PageServerLoad = async ({locals}) => {
     const instanceCountUsed = countInstances(project.metadata.used_by);
     if (instanceCountUsed >= instanceCount) {
       canCreate = false;
+      message = "You have reached your instance limit, you cannot create any more instances";
     } else {
     canCreate = true;
     }
@@ -48,6 +50,7 @@ export const load: PageServerLoad = async ({locals}) => {
   return {
     canCreate: canCreate,
     form: await superValidate(zod(formSchema)),
+    message: message,
   };
 };
 export const actions = {

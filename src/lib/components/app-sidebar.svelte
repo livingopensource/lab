@@ -13,8 +13,10 @@
   import type { ComponentProps } from "svelte";
   import { page } from "$app/stores";
 	import { nickName } from "$lib/helpers/misc";
+  import { useSidebar } from "$lib/components/ui/sidebar/index";
 	import { toggleMode } from "mode-watcher";
 
+  let sidebar = useSidebar();
   let {
 		ref = $bindable(null),
 		collapsible = "icon",
@@ -52,18 +54,20 @@
    </script>
     
    <Sidebar.Root bind:ref {collapsible} {...restProps}>
-    <Sidebar.Header>
+    <Sidebar.Header class="dark:bg-black bg-white">
      <SwiftCloud class="text-4xl"/>
     </Sidebar.Header>
-    <Sidebar.Content>
+    <Sidebar.Content class="dark:bg-black bg-white">
      <Sidebar.Group>
       <Sidebar.GroupLabel>Playground</Sidebar.GroupLabel>
       <Sidebar.GroupContent>
        <Sidebar.Menu>
         {#each items as item (item.title)}
-         <Sidebar.MenuItem>
+         <Sidebar.MenuItem onclick={() => {
+          sidebar.setOpenMobile(false);
+         }}>
           {#if $page.url.pathname === item.url}
-          <Sidebar.MenuButton isActive>
+          <Sidebar.MenuButton isActive={true}>
             {#snippet tooltipContent()}
               {item.title}
             {/snippet}
@@ -93,7 +97,7 @@
       </Sidebar.GroupContent>
      </Sidebar.Group>
     </Sidebar.Content>
-    <Sidebar.Footer>
+    <Sidebar.Footer class="dark:bg-black bg-white">
       <Sidebar.Menu>
         <Sidebar.MenuItem>
           <DropdownMenu.Root>

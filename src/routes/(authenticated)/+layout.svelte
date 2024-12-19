@@ -19,7 +19,7 @@
   let { children } = $props();
 </script>
 
-<Toaster expand={true} richColors/>
+<Toaster expand={true} richColors />
 <Sidebar.Provider>
 <AppSidebar />
 <Sidebar.Inset>
