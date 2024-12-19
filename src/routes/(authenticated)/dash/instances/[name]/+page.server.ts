@@ -27,6 +27,11 @@ export async function load({ params, parent }) {
     return {
         project: project,
         operations_url: env.WS_URL,
-        instance: data.metadata
+        instance: data.metadata,
+        lessons: [{
+            "name": "Test Doc",
+            "description": "The ultimate test document for testing pdf rendering",
+            "url": "/proxy?url=https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+        }]
     };
 }

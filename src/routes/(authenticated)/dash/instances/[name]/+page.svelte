@@ -3,6 +3,7 @@
   import * as Tabs from "$lib/components/ui/tabs/index";
   import Play from "lucide-svelte/icons/play";
   import Stop from "lucide-svelte/icons/square";
+  import Book from 'lucide-svelte/icons/book';
   import { page } from "$app/stores";
 	import { Separator } from "$lib/components/ui/separator";
   import {powerOn, powerOff, execConnection } from "$lib/helpers/instance.client";
@@ -15,17 +16,11 @@
 	import * as Card from "$lib/components/ui/card/index";
   import * as Table from "$lib/components/ui/table/index"
   import * as Pagination from "$lib/components/ui/pagination/index"
-  import { MediaQuery } from "runed";
   import byteSize from 'byte-size';
   import dateFormat  from 'dateformat';
-
-  const isDesktop = new MediaQuery("(min-width: 768px)");
- 
-   /**
-	 * @type {{ sendCredentials: (arg0: { password: string | null; }) => void; sendCtrlAltDel: () => void; addEventListener: (arg0: string, arg1: { (e: any): void; (e: any): void; (e: any): void; (e: any): void; }) => void; viewOnly: any; scaleViewport: any; }}
-	 */
-    let rfb;
-  
+	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
+	import { browser } from "$app/environment";
+	import { fetchBooks } from "$lib/helpers/misc";
     let data: {
       data: PageServerData
     } = $props()
@@ -39,7 +34,6 @@
     let pageNumber: number = $state(1);
     let totalPages: number = $state(0);
     let pathName: string =$page.url.pathname
-
     $page.url.searchParams.get("tab") && (tab = $page.url.searchParams.get("tab")!)
     $page.url.searchParams.get("doc") && (lessonDoc = $page.url.searchParams.get("doc")!)
     $page.url.searchParams.get("page") && (pageNumber = parseInt($page.url.searchParams.get("page")!))
@@ -228,7 +222,7 @@
 
       //PDFJS.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-      const loadingTask = PDFJS.getDocument(data.url);
+      const loadingTask = PDFJS.getDocument({url: data.url});
 
       const pdf = await loadingTask.promise;
 
@@ -313,9 +307,15 @@
     <div>
       <Tabs.Root value={tab}>
         <Tabs.List>
-          <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
-          <Tabs.Trigger value="terminal">Terminal</Tabs.Trigger>
-          <Tabs.Trigger value="lesson">Lessons</Tabs.Trigger>
+          <Tabs.Trigger value="overview" onclick={() => {
+            goto(pathName+"?tab=overview")
+          }}>Overview</Tabs.Trigger>
+          <Tabs.Trigger value="terminal" onclick={() => {
+            goto(pathName+"?tab=terminal")
+          }}>Terminal</Tabs.Trigger>
+          <Tabs.Trigger value="lesson" onclick={() => {
+            goto(pathName+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
+          }}>Lessons</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="overview">
           <Card.Root>
@@ -471,8 +471,61 @@
           <div bind:this={xterminal} use:showTerminal class="h-[400]"></div>
         </Tabs.Content>
         <Tabs.Content value="lesson">
-          <div class="overflow-x-auto">
-            <canvas use:loadPDF="{{ url: lessonDoc}}" bind:this={pdfCanvas}></canvas>
+          <div class="overflow-x-auto flex flex-wrap justify-between mt-2">
+            <div>
+              <canvas use:loadPDF="{{ url: lessonDoc}}" bind:this={pdfCanvas}></canvas>
+            </div>
+            <div>
+              <br />
+              <h1 class="mb-4 text-lg font-medium leading-none">Training Documents</h1>
+              {#if browser}
+                {#await fetchBooks()}
+                <div class="flex items-center space-x-4">
+                  <Skeleton class="size-12 square-full" />
+                  <div class="space-y-2">
+                    <Skeleton class="h-4 w-[250px]" />
+                    <Skeleton class="h-4 w-[200px]" />
+                  </div>
+                </div>
+                <br />
+                <div class="flex items-center space-x-4">
+                  <Skeleton class="size-12 square-full" />
+                  <div class="space-y-2">
+                    <Skeleton class="h-4 w-[250px]" />
+                    <Skeleton class="h-4 w-[200px]" />
+                  </div>
+                </div>
+                <br />
+                <div class="flex items-center space-x-4">
+                  <Skeleton class="size-12 square-full" />
+                  <div class="space-y-2">
+                    <Skeleton class="h-4 w-[250px]" />
+                    <Skeleton class="h-4 w-[200px]" />
+                  </div>
+                </div>
+                {:then data}
+                  {#each data as lesson}
+                    <Card.Root class="mb-2 cursor-pointer w-80" onclick={() => {
+                      lessonDoc = lesson.url
+                      pageNumber = 1
+                      goto($page.url.pathname+"?page="+pageNumber+"&tab=lesson&doc=/proxy?url="+lessonDoc)
+                      loadPDF(pdfCanvas, {url: lessonDoc})
+                    }}>
+                      <Card.Header>
+                        <Card.Title>{lesson.name}</Card.Title>
+                        <Card.Description>{lesson.description}</Card.Description>
+                      </Card.Header>
+                      <Card.Content>
+                        <Book />
+                      </Card.Content>
+                    </Card.Root>
+                    <Separator class="my-2" />
+                  {/each}
+                {:catch error}
+                    <div class="flex items-center space-x-4">{error}</div>
+                {/await}
+              {/if}
+            </div>
           </div>
           <div class="flex justify-between mt-2">
             <div></div>
@@ -516,7 +569,8 @@
                 {/snippet}
               </Pagination.Root>
             </div>
-            <div></div>
+            <div>
+            </div>
           </div>
         </Tabs.Content>
       </Tabs.Root>

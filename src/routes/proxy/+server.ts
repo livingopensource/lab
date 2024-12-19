@@ -8,7 +8,7 @@ export async function GET({url}: {url: URL}) {
     }
 
     try {
-        const response = await fetch(fileUrl);
+        const response = await fetch(fileUrl, {mode: "no-cors"});
         if (!response.ok) {
             throw new Error(`Failed to fetch image: ${response.status}`);
         }
