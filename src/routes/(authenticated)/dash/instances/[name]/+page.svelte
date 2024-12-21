@@ -474,6 +474,46 @@
           <div class="overflow-x-auto flex flex-wrap justify-between mt-2">
             <div>
               <canvas use:loadPDF="{{ url: lessonDoc}}" bind:this={pdfCanvas}></canvas>
+              <div class="m-6 overflow-x-auto">
+                <Pagination.Root class="w-max" count={totalPages} perPage={1} page={pageNumber} onPageChange={(page) => {
+                  pageNumber = page
+                  goto(pathName+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
+                  loadPDF(pdfCanvas, {url: lessonDoc})
+                }}>
+                  {#snippet children({ pages, currentPage })}
+                    <Pagination.Content>
+                      <Pagination.Item>
+                        <Pagination.PrevButton onclick={() => {
+                          pageNumber - 1
+                          goto($page.url.pathname+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
+                          loadPDF(pdfCanvas, {url: lessonDoc})
+                        }}/>
+                      </Pagination.Item>
+                      {#each pages as page (page.key)}
+                        {#if page.type === "ellipsis"}
+                          <Pagination.Item>
+                            <Pagination.Ellipsis />
+                          </Pagination.Item>
+                        {:else}
+                          {/* @ts-ignore */ null}
+                          <Pagination.Item isVisible={currentPage === page.value}>
+                            <Pagination.Link {page} isActive={currentPage === page.value}>
+                              {page.value}
+                            </Pagination.Link>
+                          </Pagination.Item>
+                        {/if}
+                      {/each}
+                      <Pagination.Item>
+                        <Pagination.NextButton onclick={() => {
+                          pageNumber + 1
+                          goto($page.url.pathname+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
+                          loadPDF(pdfCanvas, {url: lessonDoc})
+                        }}/>
+                      </Pagination.Item>
+                    </Pagination.Content>
+                  {/snippet}
+                </Pagination.Root>
+              </div>
             </div>
             <div>
               <br />
@@ -525,51 +565,6 @@
                     <div class="flex items-center space-x-4">{error}</div>
                 {/await}
               {/if}
-            </div>
-          </div>
-          <div class="flex justify-between mt-2">
-            <div></div>
-            <div class="m-6 overflow-x-auto">
-              <Pagination.Root class="w-max" count={totalPages} perPage={1} page={pageNumber} onPageChange={(page) => {
-                pageNumber = page
-                goto(pathName+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
-                loadPDF(pdfCanvas, {url: lessonDoc})
-              }}>
-                {#snippet children({ pages, currentPage })}
-                  <Pagination.Content>
-                    <Pagination.Item>
-                      <Pagination.PrevButton onclick={() => {
-                        pageNumber - 1
-                        goto($page.url.pathname+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
-                        loadPDF(pdfCanvas, {url: lessonDoc})
-                      }}/>
-                    </Pagination.Item>
-                    {#each pages as page (page.key)}
-                      {#if page.type === "ellipsis"}
-                        <Pagination.Item>
-                          <Pagination.Ellipsis />
-                        </Pagination.Item>
-                      {:else}
-                        {/* @ts-ignore */ null}
-                        <Pagination.Item isVisible={currentPage === page.value}>
-                          <Pagination.Link {page} isActive={currentPage === page.value}>
-                            {page.value}
-                          </Pagination.Link>
-                        </Pagination.Item>
-                      {/if}
-                    {/each}
-                    <Pagination.Item>
-                      <Pagination.NextButton onclick={() => {
-                        pageNumber + 1
-                        goto($page.url.pathname+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
-                        loadPDF(pdfCanvas, {url: lessonDoc})
-                      }}/>
-                    </Pagination.Item>
-                  </Pagination.Content>
-                {/snippet}
-              </Pagination.Root>
-            </div>
-            <div>
             </div>
           </div>
         </Tabs.Content>

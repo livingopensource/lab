@@ -1,6 +1,5 @@
 import { toast } from "svelte-sonner"
 import { json } from "@sveltejs/kit"
-import * as PDFJS from 'pdfjs-dist';
 import type { operationResponse } from "$lib/server/incus.types"
 
 export async function powerOn(instance: string) {
@@ -94,35 +93,4 @@ export async function webSocketOperaation(fqdn: string, operation: operationResp
         }
     })
     return res
-}
-
-export async function showPDF(node: HTMLCanvasElement, data: { url: string; }) {
-
-    const loadingTask = PDFJS.getDocument(data.url);
-
-    const pdf = await loadingTask.promise;
-
-    const page = await pdf.getPage(1);
-
-    const scale = 1;
-
-    const viewport = page.getViewport({ scale });
-
-    const canvas = node;
-
-    const context = canvas.getContext("2d");
-
-    canvas.height = viewport.height;
-
-    canvas.width = viewport.width;
-
-    const renderContext = {
-
-          canvasContext: context,
-
-          viewport: viewport,
-
-        };
-      //@ts-expect-error @ts-ignore
-      page.render(renderContext);
 }
