@@ -9,7 +9,7 @@ export const GET = async ({locals}) => {
     if (session == null) {
         return json(403, {})
     }
-    const res = await fetch(`${env.CLUSTER_URL}/1.0/images?filter=&recursion=1`, {
+    const res = await fetch(`${env.CLUSTER_URL}/1.0/images?filter=type+eq+container&recursion=1`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
