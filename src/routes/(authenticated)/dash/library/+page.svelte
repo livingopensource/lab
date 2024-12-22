@@ -8,6 +8,7 @@
 	import { Skeleton } from "$lib/components/ui/skeleton";
 	import { fetchBooks } from "$lib/helpers/misc";
 	import Book from "lucide-svelte/icons/book";
+  import Warning from "lucide-svelte/icons/triangle-alert";
 
   let pdfCanvas: HTMLCanvasElement
   let lessonDoc: string = $state("/LFCS.pdf")
@@ -163,7 +164,10 @@
           <Separator class="my-2" />
         {/each}
       {:catch error}
-          <div class="flex items-center space-x-4">{error}</div>
+      <div class="flex flex-wrap gap-2">
+        <div class="my-5"><Warning /></div>
+        <div><p class="text-sm text-foreground m-5"> Sorry, we are unable to show you libray material, please check your internet connection </p></div>
+      </div>
       {/await}
     {/if} 
   </div>
