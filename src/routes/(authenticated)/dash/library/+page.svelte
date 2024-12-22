@@ -68,9 +68,9 @@
 </svelte:head>
 
 <div class="container py-10 flex flex-wrap place-content-evenly">
-  <div>
+  <div class="overflow-x-auto">
     <canvas use:loadPDF="{{ url: lessonDoc}}" bind:this={pdfCanvas}></canvas>
-    <div class="m-6 overflow-x-auto">
+    <div>
       <Pagination.Root class="w-max" count={totalPages} perPage={1} page={pageNumber} onPageChange={(page) => {
         pageNumber = page
         goto(pathName+"?page="+pageNumber+"&doc=/proxy?url="+lessonDoc)

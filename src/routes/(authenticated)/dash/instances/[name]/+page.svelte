@@ -21,6 +21,7 @@
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
 	import { browser } from "$app/environment";
 	import { fetchBooks } from "$lib/helpers/misc";
+  import Warning from "lucide-svelte/icons/triangle-alert";
     let data: {
       data: PageServerData
     } = $props()
@@ -471,10 +472,10 @@
           <div bind:this={xterminal} use:showTerminal class="h-[400]"></div>
         </Tabs.Content>
         <Tabs.Content value="lesson">
-          <div class="overflow-x-auto flex flex-wrap justify-between mt-2">
-            <div>
-              <canvas use:loadPDF="{{ url: lessonDoc}}" bind:this={pdfCanvas}></canvas>
-              <div class="m-6 overflow-x-auto">
+          <div class="flex flex-wrap justify-between mt-2">
+            <div class="overflow-x-auto">
+              <canvas class="overflow-x-auto" use:loadPDF="{{ url: lessonDoc}}" bind:this={pdfCanvas}></canvas>
+              <div>
                 <Pagination.Root class="w-max" count={totalPages} perPage={1} page={pageNumber} onPageChange={(page) => {
                   pageNumber = page
                   goto(pathName+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
@@ -562,7 +563,10 @@
                     <Separator class="my-2" />
                   {/each}
                 {:catch error}
-                    <div class="flex items-center space-x-4">{error}</div>
+                <div class="flex flex-wrap gap-2">
+                  <div class="my-5"><Warning /></div>
+                  <div><p class="text-sm text-foreground m-5"> Sorry, we are unable to show you libray material, please check your internet connection </p></div>
+                </div>
                 {/await}
               {/if}
             </div>
