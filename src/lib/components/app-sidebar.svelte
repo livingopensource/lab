@@ -45,11 +45,11 @@
       url: "/dash/subscription",
       icon: CreditCard,
      },
-     {
+    /*  {
       title: "Settings",
       url: "/dash/settings",
       icon: Settings,
-     },
+     }, */
     ];
    </script>
     

@@ -17,11 +17,11 @@ export function load() {
                 Icon: 'subscription',
                 description: 'Subscribe to high quality tutorials and course materials.',
             },
-            {
+/*             {
                 title: 'Settings',
                 Icon: 'settings',
                 description: 'Change your account settings and preferences.',
-            }
+            } */
         ]
     }
 }
