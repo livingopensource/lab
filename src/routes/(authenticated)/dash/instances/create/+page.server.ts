@@ -93,7 +93,8 @@ export const actions = {
                     "alias": form.data.image,
                     "project": "default",
                     "type": "image"
-                }
+                },
+                type: form.data.instanceType
             })
         })
 

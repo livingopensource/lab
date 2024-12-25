@@ -13,7 +13,7 @@
 	import { goto } from "$app/navigation";
   import Warning from "lucide-svelte/icons/triangle-alert";
  
-  export let data
+  let {data} = $props()
  
   const form = superForm(data.form, {
     validators: zodClient(formSchema),
@@ -30,7 +30,7 @@
   });
  
   const { form: formData, enhance } = form;
-  let images: imagesResponse;
+  let images: imagesResponse
 
   onMount(async () => {
     const res = await fetch("/api/images")
@@ -85,6 +85,9 @@
                 type="single"
                 bind:value={$formData.image}
                 name={props.name}
+                onValueChange={(v) => {
+                  $formData.instanceType = images.metadata.find((i) => i.aliases[0].name === v)?.type || "";
+                }}
               >
                 <Select.Trigger {...props}>
                   {$formData.image
@@ -93,7 +96,7 @@
                 </Select.Trigger>
                 <Select.Content>
                   {#each images.metadata as image}
-                    <Select.Item value="{image.aliases[0].name}" label="{image.properties.os} {image.properties.release} ({image.properties.variant} {image.type})" />
+                    <Select.Item value={image.aliases[0].name} label="{image.properties.os} {image.properties.release} ({image.properties.variant} {image.type})" />
                   {/each}
                 </Select.Content>
               </Select.Root>
@@ -104,6 +107,16 @@
           </Form.Description>
           <Form.FieldErrors />
         </Form.Field>
+
+        <Form.Field {form} name="instanceType">
+          <Form.Control>
+            {#snippet children({ props })}
+              <Input {...props} bind:value={$formData.instanceType} type="hidden"/>
+            {/snippet}
+          </Form.Control>
+          <Form.FieldErrors />
+        </Form.Field>
+
         <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
         {#if !data.canCreate}
           <div class="flex gap-2">
