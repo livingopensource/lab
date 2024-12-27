@@ -262,7 +262,26 @@
     }
   })
 
-  onMount(async () => {})
+  onMount(async () => {
+    if (data.data.instance?.status == "Running") {
+      // Create VNC Connection if machine is running and is a vm
+      if (data.data.instance.type == "virtual-machine") {
+        const { default: RFB } = await import('@novnc/novnc/lib/rfb');
+        let rfb;
+        let vmiName = $page.params.name;
+        const url = `${data.data.operation_ks_url}/1.0/virtual-machines/${vmiName}/vnc?project=project-hwhn2r5gy6c5qm7wavvf`;
+
+        // Creating a new RFB object will start a new connection
+        rfb = new RFB(screen, url,{});
+
+        // Add listeners to important events from the RFB module
+        rfb.addEventListener("connect",  () => {});
+        rfb.addEventListener("disconnect", () => {});
+        rfb.addEventListener("credentialsrequired", () => {});
+        rfb.addEventListener("desktopname", () => {});
+      }
+    }
+  })
 </script>
 <svelte:head>
     <link rel="stylesheet" href="/css/xterm.css" />
@@ -317,6 +336,7 @@
           <Tabs.Trigger value="lesson" onclick={() => {
             goto(pathName+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
           }}>Lessons</Tabs.Trigger>
+          <Tabs.Trigger value="vnc">VNC</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="overview">
           <Card.Root>
@@ -570,6 +590,11 @@
                 {/await}
               {/if}
             </div>
+          </div>
+        </Tabs.Content>
+        <Tabs.Content value="vnc">
+          <div id="screen" bind:this={screen}>
+              <!-- This is where the remote screen will appear -->
           </div>
         </Tabs.Content>
       </Tabs.Root>

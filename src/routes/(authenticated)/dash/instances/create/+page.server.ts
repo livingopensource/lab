@@ -75,7 +75,7 @@ export const actions = {
                     rejectUnauthorized: false,
                 }
             }),
-            body: JSON.stringify({
+            body: form.data.instanceType == "container" ? JSON.stringify({
                 name: form.data.instanceName,
                 "config": {
                   "limits.cpu": "1",
@@ -95,7 +95,31 @@ export const actions = {
                     "type": "image"
                 },
                 type: form.data.instanceType
-            })
+            }) : JSON.stringify({
+              name: form.data.instanceName,
+              "config": {
+                "limits.cpu": "1",
+                "limits.memory": "1GiB",
+              },
+              "devices": {
+                "root": {
+                  "path": "/",
+                  "pool": "default",
+                  "size": "10GiB",
+                  "type": "disk"
+                },
+                "agent": {
+                  "source": "agent:config",
+                  "type": "disk"
+                }
+              },
+              "source": {
+                  "alias": form.data.image,
+                  "project": "default",
+                  "type": "image"
+              },
+              type: form.data.instanceType
+          })
         })
 
         if (!res.ok) {
