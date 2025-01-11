@@ -74,14 +74,23 @@
      </Table.Header>
      <Table.Body>
       {#each table.getRowModel().rows as row (row.id)}
-       <Table.Row data-state={row.getIsSelected() && "selected"} onclick={() => goto(`/dash/instances/${row.getValue("name")}`)} class="cursor-pointer">
+       <Table.Row data-state={row.getIsSelected() && "selected"}>
         {#each row.getVisibleCells() as cell (cell.id)}
-         <Table.Cell>
-          <FlexRender
-           content={cell.column.columnDef.cell}
-           context={cell.getContext()}
-          />
-         </Table.Cell>
+          {#if cell.id != row.id+"_actions"}
+            <Table.Cell onclick={() => goto(`/dash/instances/${row.getValue("name")}`)} class="cursor-pointer">
+             <FlexRender
+              content={cell.column.columnDef.cell}
+              context={cell.getContext()}
+             />
+            </Table.Cell>
+          {:else}
+            <Table.Cell>
+              <FlexRender
+               content={cell.column.columnDef.cell}
+               context={cell.getContext()}
+              />
+           </Table.Cell>
+          {/if}
         {/each}
        </Table.Row>
       {:else}

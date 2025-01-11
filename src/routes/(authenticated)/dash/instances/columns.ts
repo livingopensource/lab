@@ -32,6 +32,7 @@ export const columns: ColumnDef<instanceResponse["metadata"]>[] = [
     },
     {
         id: "actions",
+        header: "Actions",
         cell: ({ row }) => {
           return renderComponent(DataTableActions, { instance: row.original });
         },

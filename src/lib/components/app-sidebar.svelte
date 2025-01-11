@@ -40,11 +40,11 @@
       url: "/dash/library",
       icon: Library,
      },
-     {
+   /*   {
       title: "Subscription",
       url: "/dash/subscription",
       icon: CreditCard,
-     },
+     }, */
     /*  {
       title: "Settings",
       url: "/dash/settings",
