@@ -28,6 +28,7 @@ export async function load({ params, parent }) {
         project: project,
         operations_url: env.WS_URL,
         operation_ks_url: env.K8S_URL,
-        instance: data.metadata
+        instance: data.metadata,
+        backend: env.BACKEND
     };
 }

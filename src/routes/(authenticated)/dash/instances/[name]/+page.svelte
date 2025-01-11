@@ -336,7 +336,9 @@
           <Tabs.Trigger value="lesson" onclick={() => {
             goto(pathName+"?page="+pageNumber+"&tab=lesson&doc="+lessonDoc)
           }}>Lessons</Tabs.Trigger>
+          {#if data.data.backend == "k8s"}
           <Tabs.Trigger value="vnc">VNC</Tabs.Trigger>
+          {/if}
         </Tabs.List>
         <Tabs.Content value="overview">
           <Card.Root>
@@ -592,11 +594,13 @@
             </div>
           </div>
         </Tabs.Content>
+        {#if data.data.backend == "k8s"}
         <Tabs.Content value="vnc">
           <div id="screen" bind:this={screen}>
               <!-- This is where the remote screen will appear -->
           </div>
         </Tabs.Content>
+        {/if}
       </Tabs.Root>
     </div>
   </div>
