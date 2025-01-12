@@ -13,23 +13,28 @@
 	import { Label } from "$lib/components/ui/label";
 	import { Input } from "$lib/components/ui/input";
 	import { toast } from "svelte-sonner";
+	import type { VirtualMachine } from "$lib/server/k8s/vms.types";
     
-    let { instance }: { instance: instanceResponse["metadata"] } = $props();
-    let newInstanceName: string = $state(instance.name)
+    let { instance }: { instance: VirtualMachine | instanceResponse["metadata"] } = $props();
+    //@ts-ignore
+    let instanceName = instance.name || instance.metadata.name
+    let newInstanceName: string = $state(instanceName)
     let openAlert = $state(false);
     let openInstanceRename = $state(false);
    </script>
     
    <span class="flex gap-2">
-    {#if instance.status == "Stopped"}
+    {/* @ts-ignore */ null}
+    {#if instance.status == "Stopped" || instance.status.printableStatus != "Running"}
          <Button variant="ghost" onclick={() =>{
-          powerOn(instance.name)
+          powerOn(instanceName)
           setTimeout(() => invalidateAll(), 1000)
          }}><Play /></Button>
     {/if}
-    {#if instance.status == "Running"}
+    {/* @ts-ignore */ null}
+    {#if instance.status == "Running" || instance.status.printableStatus == "Running"}
          <Button variant="ghost" onclick={() => {
-          powerOff(instance.name)
+          powerOff(instanceName)
           setTimeout(() => invalidateAll(), 1000)
          }}><Stop /></Button>
     {/if}
@@ -39,7 +44,7 @@
       </Sheet.Trigger>
       <Sheet.Content side="right">
         <Sheet.Header>
-          <Sheet.Title>Rename {instance.name} Instance</Sheet.Title>
+          <Sheet.Title>Rename {instanceName} Instance</Sheet.Title>
           <Sheet.Description>
             Give your instance a new name
           </Sheet.Description>
@@ -52,10 +57,10 @@
         </div>
         <Sheet.Footer>
           <Button class={buttonVariants({ variant: "default" })} onclick={async () => {
-              if (newInstanceName != instance.name 
+              if (newInstanceName != instanceName 
                   && newInstanceName != ""
               ) {
-                  renameInstance(instance.name, newInstanceName)
+                  renameInstance(instanceName, newInstanceName)
                   openInstanceRename = false;
                   setTimeout(() => invalidateAll(), 1000)
               } else {
@@ -78,13 +83,13 @@
           <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
           <AlertDialog.Description>
             This action cannot be undone. This will permanently delete the instance
-            {instance.name} and remove the associated data.
+            {instanceName} and remove the associated data.
           </AlertDialog.Description>
         </AlertDialog.Header>
         <AlertDialog.Footer>
           <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
           <AlertDialog.Action onclick={ async () => {
-            const res = await fetch(`/api/${instance.name}`, {
+            const res = await fetch(`/api/${instanceName}`, {
               method: "DELETE"
             })
             if (res.ok) {
@@ -94,7 +99,7 @@
               setTimeout(() => invalidateAll(), 1000)
             } else {
               toast.error("Instance delete failed", {
-                description: `Unable to delete ${instance.name} instance`
+                description: `Unable to delete ${instanceName} instance`
               })
             }
             openAlert = false

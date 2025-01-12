@@ -24,6 +24,7 @@
   </div>
   <br />
   <div>
+    {/* @ts-ignore */ null}
     <DataTable data={data.data.instances} {columns} />
   </div>
 </div>
