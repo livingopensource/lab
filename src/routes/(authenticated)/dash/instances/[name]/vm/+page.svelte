@@ -20,6 +20,7 @@
         //rfb.scaleViewport = true;
         //rfb.resizeSession = true;
         //rfb.clipViewport = true;
+	    //rfb.fullScreen = true;
 
         // Add listeners to important events from the RFB module
         rfb.addEventListener("connect",  () => {});
@@ -44,10 +45,10 @@
         </div>
     </div>
     <div class="flex flex-wrap gap-4 place-content-between">
-        <div class="flex-auto w-64" bind:this={screen}>
+        <div class="flex-auto w-3/4" bind:this={screen}>
             <!-- This is where the remote screen will appear -->
         </div>
-        <div class="flex-auto w-14">
+        <div class="flex-auto w-1/4">
         </div>
     </div>
 </div>
