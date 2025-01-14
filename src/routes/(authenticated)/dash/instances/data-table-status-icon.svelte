@@ -9,6 +9,10 @@
 {#if instance.status == "Running" || instance.status.printableStatus == "Running"}
   <span class="flex gap-2"><CircleCheck class="text-green-500 size-4" />Running</span>
 {:else}
-  <span class="flex gap-2"><Circle class="size-4" />Stopped</span>
+  {#if instance.status != "Running" && instance.status.printableStatus != "Running" && instance.status.printableStatus != null}
+	<span class="flex gap-2"><Circle class="size-4" />{instance.status.printableStatus}</span>
+  {:else}
+  	<span class="flex gap-2"><Circle class="size-4" />Stopped</span>
+  {/if}
 {/if}
 

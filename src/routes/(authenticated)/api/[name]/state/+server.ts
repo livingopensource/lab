@@ -12,7 +12,7 @@ export const PUT = async ({locals, url, params}) => {
     if (state != null) {
 
         if (state == "start") {
-            const vm = await virtualMachinePowerToggle(params.name, project, "RerunOnFailure")
+            const vm = await virtualMachinePowerToggle(params.name, project, "Always")
             if (vm.kind != "VirtualMachine") {
                 return json({"error": `unable to ${state} instance`}, {
                     status: 400
