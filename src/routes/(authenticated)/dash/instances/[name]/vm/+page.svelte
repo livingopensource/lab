@@ -2,16 +2,24 @@
 	import { page } from "$app/stores";
 	import { onMount } from "svelte";
 	import type { PageServerData } from "./$types";
-
+	import { Button } from "$lib/components/ui/button";
+    import Restart from "lucide-svelte/icons/rotate-cw";
+	import type NoVncClient from "@novnc/novnc/lib/rfb";
     let data: {
       data: PageServerData
     } = $props()
     let screen: HTMLElement
+    let rfb: NoVncClient
+
+    function ctrlC() {
+        // Then send the C key press
+        //rfb.sendKey(3);
+    }
 
     onMount(async () => {
     if (data.data.instance?.status.printableStatus == "Running") {
         const { default: RFB } = await import('@novnc/novnc/lib/rfb');
-        let rfb;
+
         let vmiName = $page.params.name;
         const url = `${data.data.operation_ks_url}/1.0/virtual-machines/${vmiName}/vnc?project=${data.data.project}`;
 
@@ -40,8 +48,13 @@
         <div class="flex h-5 items-center space-x-4 text-sm">
             <h1 class="text-2xl">{data.data.instance.metadata.name}</h1>
         </div>
-        <div>
-            <!-- This is where the remote screen will appear -->
+        <div class="flex place-content-end h-5 items-center space-x-4 text-sm"> 
+            <Button variant="secondary" onclick={() => ctrlC()}>
+                Ctr+C
+            </Button>
+            <Button variant="destructive" onclick={() => /* rfb.sendCtrlAltDel() */{}}>
+                <Restart class="mr-2 size-4" /> Reboot
+            </Button>
         </div>
     </div>
     <div class="flex flex-wrap gap-4 place-content-between">

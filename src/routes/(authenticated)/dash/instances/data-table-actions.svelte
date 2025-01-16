@@ -26,21 +26,21 @@
    <span class="flex gap-2">
     {/* @ts-ignore */ null}
     {#if instance.status == "Stopped" || instance.status.printableStatus != "Running"}
-         <Button variant="ghost" onclick={() =>{
+         <Button variant="secondary" onclick={() =>{
           powerOn(instanceName)
           setTimeout(() => invalidateAll(), 1000)
          }}><Play /></Button>
     {/if}
     {/* @ts-ignore */ null}
     {#if instance.status == "Running" || instance.status.printableStatus == "Running"}
-         <Button variant="ghost" onclick={() => {
+         <Button variant="secondary" onclick={() => {
           powerOff(instanceName)
           setTimeout(() => invalidateAll(), 1000)
          }}><Stop /></Button>
     {/if}
     <Sheet.Root bind:open={openInstanceRename}>
       <Sheet.Trigger class="float-right">
-        <Button variant="ghost"> <Edit /></Button>
+        <Button variant="secondary"> <Edit /></Button>
       </Sheet.Trigger>
       <Sheet.Content side="right">
         <Sheet.Header>
@@ -75,7 +75,7 @@
       </Sheet.Content>
     </Sheet.Root>
     <AlertDialog.Root bind:open={openAlert}>
-      <AlertDialog.Trigger class={buttonVariants({ variant: "secondary" })}>
+      <AlertDialog.Trigger class={buttonVariants({ variant: "destructive" })}>
           <Trash />
       </AlertDialog.Trigger>
       <AlertDialog.Content>

@@ -55,7 +55,7 @@
     
    <Sidebar.Root bind:ref {collapsible} {...restProps}>
     <Sidebar.Header class="dark:bg-black bg-gray-100">
-     <SwiftCloud class="text-4xl"/> SwiftCloud Labs
+     <SwiftCloud class="text-4xl"/> Swift Cloud Labs
     </Sidebar.Header>
     <Sidebar.Content class="dark:bg-black bg-gray-100">
      <Sidebar.Group>
