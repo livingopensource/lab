@@ -1,9 +1,7 @@
 <script lang="ts">
-  import CreditCard from "lucide-svelte/icons/credit-card";
   import House from "lucide-svelte/icons/house";
   import CPU from "lucide-svelte/icons/cpu";
   import Library from "lucide-svelte/icons/library-big";
-  import Settings from "lucide-svelte/icons/settings";
   import SwiftCloud from "lucide-svelte/icons/cloud";
   import ChevronUp from "lucide-svelte/icons/chevron-up";
   import LogOut from "lucide-svelte/icons/log-out";
@@ -55,7 +53,7 @@
     
    <Sidebar.Root bind:ref {collapsible} {...restProps}>
     <Sidebar.Header class="dark:bg-black bg-gray-100">
-     <SwiftCloud class="text-4xl"/> Swift Cloud Labs
+     <SwiftCloud class="text-4xl"/> Labs
     </Sidebar.Header>
     <Sidebar.Content class="dark:bg-black bg-gray-100">
      <Sidebar.Group>
@@ -72,7 +70,7 @@
             {/snippet}
             {#snippet child({ props })}
              <a href={item.url} {...props}>
-              <item.icon />
+              <item.icon size={16} />
               <span>{item.title}</span>
              </a>
             {/snippet}
@@ -84,7 +82,7 @@
             {/snippet}
             {#snippet child({ props })}
              <a href={item.url} {...props}>
-              <item.icon />
+              <item.icon size={16}/>
               <span>{item.title}</span>
              </a>
             {/snippet}

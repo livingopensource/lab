@@ -12,7 +12,7 @@
   } = $props()
 
   onMount(async () => {
-    const connection = source('/api/sse-events', {
+  /* const connection = source('/api/sse-events', {
     close({ connect }) {
       console.log("reconnecting")
       connect()
@@ -23,7 +23,7 @@
   sse.subscribe(async (message) => {
     console.log(message)
     refresh()
-  })
+  }) */
 
   });
 

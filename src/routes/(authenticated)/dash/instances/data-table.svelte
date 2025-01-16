@@ -79,7 +79,7 @@
           {#if cell.id != row.id+"_actions"}
             <Table.Cell onclick={() => {
                if (row.getValue("type") == "VirtualMachine") {
-                goto(`/dash/instances/${row.getValue("name")}/vm`)
+                goto(`/dash/instances/${row.getValue("name")}`)
                } else {
                 goto(`/dash/instances/${row.getValue("name")}`)
                }
