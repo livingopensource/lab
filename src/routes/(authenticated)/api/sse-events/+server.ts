@@ -19,44 +19,14 @@ export const POST: RequestHandler = async ({ locals }) => {
 			{
 				allowWatchBookmarks: true
 			},
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			(type, apiObj, watchObj) => {
-				if (type === 'ADDED') {
-					const { error } = emit('message', 'new object');
+				//console.log(apiObj)
+				const { error } = emit('message', apiObj.reason);
 					if (error) {
 						console.log(error.message);
 					}
 					return
-				} else if (type === 'BOOKMARK') {
-					const { error } = emit(
-						'message',
-						`Bookmark ${watchObj.metadata.resourceVersion}`
-					);
-					if (error) {
-						console.log(error.message);
-					}
-					return
-				} else if (type === 'MODIFIED') {
-					const { error } = emit('message', 'modified object');
-					if (error) {
-						console.log(error.message);
-					}
-					return
-				} else if (type === 'DELETED') {
-					const { error } = emit('message', 'deleted object');
-					if (error) {
-						console.log(error.message);
-					}
-					return
-				} else {
-					const { error } = emit(
-						'message',
-						`Unknown response ${type}}`
-					);
-					if (error) {
-						console.log(error.message);
-					}
-					return
-				}
 			},
 			(err) => {
 				const { error } = emit('message', `Got an error ${err}`);
