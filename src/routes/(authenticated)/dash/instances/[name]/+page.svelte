@@ -28,6 +28,7 @@
         // Creating a new RFB object will start a new connection
         rfb = new RFB(screen, url,{});
         rfb.scaleViewport = true
+        rfb.showDotCursor = true
 	    rfb.focus()
     }
   })
