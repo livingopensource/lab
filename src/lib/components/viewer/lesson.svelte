@@ -1,5 +1,7 @@
 <script lang="ts">
-    export let content: string ="<h1>Hello World Lesson</h1>";
+    let {
+        content = "<h1><b>Hello World</b> Lesson</h1>" 
+    } = $props();
 </script>
 <div class="container py-10">
     {@html content}

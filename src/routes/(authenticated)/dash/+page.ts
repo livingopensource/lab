@@ -3,7 +3,7 @@ export function load() {
     return {
         info: [
             {
-                title: 'Instance',
+                title: 'VM Instance',
                 Icon: 'instances',
                 description: 'Create, manage and delete instances to run your labs and tutorials.',
             },

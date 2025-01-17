@@ -13,6 +13,7 @@
 	import { nickName } from "$lib/helpers/misc";
   import { useSidebar } from "$lib/components/ui/sidebar/index";
 	import { toggleMode } from "mode-watcher";
+	import CreditCard from "lucide-svelte/icons/credit-card";
 
   let sidebar = useSidebar();
   let {
@@ -24,12 +25,12 @@
     // Menu items.
     const items = [
      {
-      title: "Home",
+      title: "Dashboard",
       url: "/dash",
       icon: House,
      },
      {
-      title: "Instances",
+      title: "VM Instances",
       url: "/dash/instances",
       icon: CPU,
      },
@@ -38,11 +39,11 @@
       url: "/dash/library",
       icon: Library,
      },
-   /*   {
+     {
       title: "Subscription",
       url: "/dash/subscription",
       icon: CreditCard,
-     }, */
+     },
     /*  {
       title: "Settings",
       url: "/dash/settings",

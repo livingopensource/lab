@@ -4,15 +4,18 @@
 	import type { PageServerData } from "./$types";
   import { source } from 'sveltekit-sse';
 	import { Button } from "$lib/components/ui/button";
-	import { invalidate, invalidateAll } from "$app/navigation";
+	import { invalidateAll } from "$app/navigation";
 	import { onMount } from "svelte";
+	import { toast } from "svelte-sonner";
 
   let data: {
     data: PageServerData
-  } = $props()
+  } = $props();
+
+  let event: string = $state("")
 
   onMount(async () => {
-  /* const connection = source('/api/sse-events', {
+  const connection = source('/api/sse-events', {
     close({ connect }) {
       console.log("reconnecting")
       connect()
@@ -21,15 +24,19 @@
 
   const sse = connection.select("message")
   sse.subscribe(async (message) => {
-    console.log(message)
-    refresh()
-  }) */
+    event = message
+  })
 
   });
 
-  function refresh() {
+  $effect(() => {
+    if (event == "deleted vmi") {
+      toast.success("Powered off", {
+        description: "Machine gracefully powered off"
+      })
+    }
     invalidateAll()
-  }
+  })
  
 </script>
 <svelte:head>
