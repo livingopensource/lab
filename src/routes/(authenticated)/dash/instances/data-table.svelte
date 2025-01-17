@@ -77,7 +77,13 @@
        <Table.Row data-state={row.getIsSelected() && "selected"}>
         {#each row.getVisibleCells() as cell (cell.id)}
           {#if cell.id != row.id+"_actions"}
-            <Table.Cell onclick={() => goto(`/dash/instances/${row.getValue("name")}`)} class="cursor-pointer">
+            <Table.Cell onclick={() => {
+               if (row.getValue("type") == "VirtualMachine") {
+                goto(`/dash/instances/${row.getValue("name")}`)
+               } else {
+                goto(`/dash/instances/${row.getValue("name")}`)
+               }
+            }} class="cursor-pointer">
              <FlexRender
               content={cell.column.columnDef.cell}
               context={cell.getContext()}
