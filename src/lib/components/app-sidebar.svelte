@@ -71,7 +71,7 @@
             {/snippet}
             {#snippet child({ props })}
              <a href={item.url} {...props}>
-              <item.icon size={16} />
+              <item.icon />
               <span>{item.title}</span>
              </a>
             {/snippet}
@@ -83,7 +83,7 @@
             {/snippet}
             {#snippet child({ props })}
              <a href={item.url} {...props}>
-              <item.icon size={16}/>
+              <item.icon/>
               <span>{item.title}</span>
              </a>
             {/snippet}

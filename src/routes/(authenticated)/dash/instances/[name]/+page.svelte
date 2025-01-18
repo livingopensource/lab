@@ -2,7 +2,6 @@
 	import { page } from "$app/stores";
 	import { onMount } from "svelte";
     import PowerOff from "lucide-svelte/icons/power-off";
-	import { Button } from "$lib/components/ui/button";
     import Restart from "lucide-svelte/icons/rotate-cw";
     import FullScreen from "lucide-svelte/icons/fullscreen";
 	import type NoVncClient from "@novnc/novnc/lib/rfb";
@@ -42,7 +41,7 @@
     <div class="grid grid-cols-2 gap-4 place-content-between mb-10">
         <div class="flex h-5 items-center space-x-4 text-sm">
             {/* @ts-ignore */ null}
-            <h1 class="text-2xl">{data.instance.metadata.name}</h1>
+            <h1 class="text-2xl uppercase">{data.instance.metadata.name}</h1>
         </div>
         <div class="flex place-content-end h-5 items-center space-x-4 text-sm"> 
             {#if data.instance?.status.printableStatus == "Running"}
@@ -61,7 +60,7 @@
                 <Tooltip.Root>
                     <Tooltip.Trigger class={buttonVariants({ variant: "secondary" })}
                         onclick={() => rfb.sendCtrlAltDel()}>
-                        <Restart class="mr-2 size-4" />
+                        <Restart class="mr-2 size-4" /> Reboot
                     </Tooltip.Trigger>
                     <Tooltip.Content>
                         Reboot machine
