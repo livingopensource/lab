@@ -203,6 +203,12 @@ type projectInterface = {
     }
 }
 
+export interface projectsInterface {
+    metadata: string[]
+    status: string
+    status_code: number
+}
+
 export interface projectsResponse {
     type: string,
     status: string,
