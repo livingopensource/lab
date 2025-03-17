@@ -412,20 +412,24 @@
                         Storage
                       </Table.Cell>
                       <Table.Cell>
-                        {#each Object.keys(data.data.instance.state.disk)as disk}
-                          <div class="grid grid-cols-2">
-                            <div>{disk} disk:</div>
-                            <div>{byteSize(data.data.instance.state.disk[disk].usage)}</div>
-                          </div>
-                        {/each}
+                        {#if data.data.instance.state.disk != null}
+                          {#each Object.keys(data.data.instance.state.disk)as disk}
+                            <div class="grid grid-cols-2">
+                              <div>{disk} disk:</div>
+                              <div>{byteSize(data.data.instance.state.disk[disk].usage)}</div>
+                            </div>
+                          {/each}
+                        {/if}
                       </Table.Cell>
                       <Table.Cell>
-                        {#each Object.keys(data.data.instance.state.disk)as disk}
-                          <div class="grid grid-cols-2">
-                            <div>{disk} disk:</div>
-                            <div>{byteSize(data.data.instance.state.disk[disk].total)}</div>
-                          </div>
-                        {/each}
+                        {#if data.data.instance.state.disk != null}
+                          {#each Object.keys(data.data.instance.state.disk)as disk}
+                            <div class="grid grid-cols-2">
+                              <div>{disk} disk:</div>
+                              <div>{byteSize(data.data.instance.state.disk[disk].total)}</div>
+                            </div>
+                          {/each}
+                        {/if}
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>

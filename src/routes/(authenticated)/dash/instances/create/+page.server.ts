@@ -108,10 +108,6 @@ export const actions = {
                   "size": "10GiB",
                   "type": "disk"
                 },
-                "agent": {
-                  "source": "agent:config",
-                  "type": "disk"
-                }
               },
               "source": {
                   "alias": form.data.image,
