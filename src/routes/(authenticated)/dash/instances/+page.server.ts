@@ -5,19 +5,10 @@ import type { instancesResponse, operationResponse } from '$lib/server/incus.typ
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import { hash } from '$lib/server/utils';
-import { virtualMachines } from '$lib/server/k8s/crd.api';
-import type { VirtualMachine } from '$lib/server/k8s/vms.types';
 
 export async function load({parent}) {
     const { session } = await parent()
     const project = hash(session.user?.email ?? "")  ?? "none"
-    if (env.BACKEND == "k8s") {
-        const data = await virtualMachines(project) as VirtualMachine[]
-        return {
-            project: project,
-            instances: data
-        };
-    }
     const res = await fetch(`${env.CLUSTER_URL}/1.0/instances?project=${project}&recursion=2`, {
         dispatcher: new Agent({
             connect: {
@@ -31,6 +22,7 @@ export async function load({parent}) {
     if (!res.ok) {
         throw new Error(res.statusText);
     }
+
     const data = await res.json() as instancesResponse;
     return {
         project: project,
