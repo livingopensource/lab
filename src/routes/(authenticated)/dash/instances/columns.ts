@@ -4,17 +4,25 @@ import { renderComponent } from "$lib/components/ui/data-table/index";
 import DataTableActions from "./data-table-actions.svelte";
 import DataTableNameSort from "./data-table-name-sort.svelte";
 import DataTableStatusIcon from "./data-table-status-icon.svelte";
+import type { VirtualMachine } from "$lib/server/k8s/vms.types";
 
-export const columns: ColumnDef<instanceResponse["metadata"]>[] = [
+export const columns: ColumnDef<VirtualMachine | instanceResponse["metadata"]>[] = [
     {
-        accessorKey: "name",
+        id: "name",
+        accessorFn: (a) => {
+            //@ts-expect-error a.name is not defined if running k8s implementation
+            return a?.name ?? a?.metadata?.name},
         header: ({ column }) =>
         renderComponent(DataTableNameSort, {
           onclick: () => column.toggleSorting(column.getIsSorted() === "asc"),
         }),
     },
     {
-        accessorKey: "type",
+        id: "type",
+        accessorFn: (a) => {
+            //@ts-expect-error a.type is not defined if running k8s implementation
+            return a.type ?? a.kind
+        },
         header: "Type"
     },
     {
@@ -27,7 +35,16 @@ export const columns: ColumnDef<instanceResponse["metadata"]>[] = [
         }
     },
     {
-        accessorFn: (a) =>  a.config["image.os"]+" "+a.config["image.release"],
+        id: "os",
+        accessorFn: (a) =>  {
+            //@ts-expect-error a.config is not defined if running k8s implementation
+            if (a.config?.["image.os"] != undefined) {
+            //@ts-expect-error a.config is not defined if running k8s implementation
+            return a.config?.["image.os"]+" "+a.config?.["image.release"]
+            }
+            //@ts-expect-error a.config is not defined if running k8s implementation
+            return a.metadata?.labels?.["kubevirt.io/os"]
+        },
         header: "OS"
     },
     {
