@@ -1,7 +1,7 @@
 import { redirect} from "@sveltejs/kit"
 import { fail, superValidate } from "sveltekit-superforms"
 import { zod } from "sveltekit-superforms/adapters"
-import { formSchema } from "./schema.js"
+import { formSchema } from "./schema"
 import type { Actions } from "./$types"
 import { hash } from "$lib/server/utils.js"
 import { env } from "$env/dynamic/private"
