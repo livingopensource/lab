@@ -14,6 +14,7 @@
   import { useSidebar } from "$lib/components/ui/sidebar/index";
 	import { toggleMode } from "mode-watcher";
 	import CreditCard from "lucide-svelte/icons/credit-card";
+	import { Settings } from "lucide-svelte";
 
   let sidebar = useSidebar();
   let {
@@ -40,15 +41,10 @@
       icon: Library,
      },
      {
-      title: "Subscription",
-      url: "/dash/subscription",
-      icon: CreditCard,
-     },
-    /*  {
       title: "Settings",
       url: "/dash/settings",
       icon: Settings,
-     }, */
+     },
     ];
    </script>
     
