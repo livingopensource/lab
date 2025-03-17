@@ -42,7 +42,7 @@
       </div>
     </div>
       <div>
-        <form method="POST" use:enhance>
+        <form method="POST" >
           <Form.Field {form} name="project">
             <Form.Control>
               {#snippet children({ props })}
