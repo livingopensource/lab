@@ -1,17 +1,18 @@
 <script lang="ts">
-    import * as Card from "$lib/components/ui/card"
-    import * as Avatar from "$lib/components/ui/avatar"
-    import * as Form from "$lib/components/ui/form"
-    import {Skeleton} from "$lib/components/ui/skeleton";
-    import { Input } from "$lib/components/ui/input"
-    import { page } from "$app/stores";
-    import { nickName } from "$lib/helpers/misc.js";
-    import { toast } from "svelte-sonner";
-    import { goto } from "$app/navigation";
-    import { zodClient } from "sveltekit-superforms/adapters";
-    import { superForm } from "sveltekit-superforms";
-    import { formSchema } from "./schema";
+  import * as Card from "$lib/components/ui/card"
+  import * as Avatar from "$lib/components/ui/avatar"
+  import * as Form from "$lib/components/ui/form"
+  import {Skeleton} from "$lib/components/ui/skeleton";
+  import { Input } from "$lib/components/ui/input"
+  import { page } from "$app/stores";
+  import { nickName } from "$lib/helpers/misc.js";
+  import { toast } from "svelte-sonner";
+  import { goto } from "$app/navigation";
+  import { zodClient } from "sveltekit-superforms/adapters";
+  import { superForm } from "sveltekit-superforms";
+  import { formSchema } from "./schema";
 	import { Button } from "$lib/components/ui/button";
+	import { Search } from "lucide-svelte";
 
     let {data} = $props()
 
@@ -102,7 +103,24 @@
             </Card.Header>
             <Card.Content>
                 <div class="grid grid-cols-2 gap-4 place-content-between">
-                  <div class="flex h-5 items-center space-x-4 text-sm">
+                  <div class="flex h-5 items-center space-x-4 text-sm mb-10">
+                    <form method="GET" action="/dash/projects/user" >
+                      <div class="mt-10 max-w-2xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="relative">
+                          <Input
+                            name="email"
+                            type="text"
+                            class="p-4 block w-full rounded-full"
+                            placeholder="Search for user by email address..."
+                          />
+                          <div class="absolute top-1/2 right-2 -translate-y-1/2">
+                            <Button size="sm" variant="ghost" class="rounded-full">
+                              <Search class="shrink-0 w-6 h-6" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                   <div>
                     <Button class="float-right" href="/dash/projects/create">
