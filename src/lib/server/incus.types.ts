@@ -193,13 +193,26 @@ export interface eventsResponse {
     error_code: number
 }
 
-type projectInterface = {
+export type projectInterface = {
     description: string,
     name: string,
     used_by: string[],
     config: {
         "features.images": string,
         "limits.instances": string
+    },
+    metadata: {
+        name: string,
+        description: string,
+        config: {
+            "features.images": string,
+            "features.networks": string,
+            "features.profiles": string,
+            "features.storage.volumes": string,
+            "features.storage.buckets": string,
+            "limits.cpu": string,
+            "limits.instances": string
+        }
     }
 }
 

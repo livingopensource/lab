@@ -8,6 +8,11 @@ export function load() {
                 description: 'Create, manage and delete instances to run your labs and tutorials.',
             },
             {
+                title: 'Kubernetes',
+                Icon: 'kubernetes',
+                description: 'Create, manage and delete kubernetes clusters to run your labs and tutorials.',
+            },
+            {
                 title: 'Library',
                 Icon: 'library',
                 description: 'Check the library section to see all the tutorials and courses that are available.',

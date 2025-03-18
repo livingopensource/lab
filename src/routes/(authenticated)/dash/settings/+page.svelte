@@ -101,11 +101,11 @@
                     Manage all user projects configurations.
                 </Card.Description>
             </Card.Header>
-            <Card.Content>
+            <Card.Content class="overflow-x-auto">
                 <div class="grid grid-cols-2 gap-4 place-content-between">
                   <div class="flex h-5 items-center space-x-4 text-sm mb-10">
                     <form method="GET" action="/dash/projects/user" >
-                      <div class="mt-10 max-w-2xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                      <div class="mt-10 w-full mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="relative">
                           <Input
                             name="email"
@@ -151,7 +151,7 @@
                   </div>
                 {:then projects}
                     {#each projects.metadata as project}
-                        <p>{project.split("/")[project.split("/").length - 1]}</p>
+                        <a href="/dash/projects/{project.split("/")[project.split("/").length - 1]}">{project.split("/")[project.split("/").length - 1]}</a> <br />
                     {/each}
                 {:catch err}
                     <p>Error loading projects</p>

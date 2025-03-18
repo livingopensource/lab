@@ -4,6 +4,7 @@
   import Library from "lucide-svelte/icons/library-big";
   import SwiftCloud from "lucide-svelte/icons/cloud";
   import ChevronUp from "lucide-svelte/icons/chevron-up";
+  import Container from "lucide-svelte/icons/container";
   import LogOut from "lucide-svelte/icons/log-out";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index";
@@ -34,6 +35,11 @@
       title: "VM Instances",
       url: "/dash/instances",
       icon: CPU,
+     },
+     {
+      title: "Kubernetes",
+      url: "/dash/kubernetes",
+      icon: Container,
      },
      {
       title: "Library",

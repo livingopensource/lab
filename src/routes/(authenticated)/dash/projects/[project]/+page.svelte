@@ -1,41 +1,15 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
     import * as Card from "$lib/components/ui/card";
-    import * as Form from "$lib/components/ui/form";
-    import { Input } from "$lib/components/ui/input";
     import { Skeleton } from "$lib/components/ui/skeleton";
-	import { toast } from "svelte-sonner";
-	import { superForm } from "sveltekit-superforms";
-	import { zodClient } from "sveltekit-superforms/adapters";
-    import { formSchema } from "./schema";
 	import type { PageServerData } from "./$types";
-
     export let data: PageServerData;
-
-    $: instances = 0;
-
-    const form = superForm(data.form, {
-      validators: zodClient(formSchema),
-      onUpdated: ({ form: f }) => {
-        if (f.valid) {
-          toast.success(`Updating project `);
-          setTimeout(() => {
-            goto("/dash/settings")
-          }, 3000);
-        } else {
-          toast.error("Please fix the errors in the form.");
-        }
-      }
-    });
-   
-    const { form: formData, enhance } = form;
 </script>
 
 <div class="container py-10 gap-5 place-content-evenly">
     <Card.Root>
         <Card.Header>
             <Card.Title>
-                Project for {data.email}
+                Project Details
             </Card.Title>
             <Card.Description>
                 Manage user projects configurations.
@@ -75,22 +49,15 @@
                 {#if project == null}
                    <p> No project found for this email address</p>
                 {:else}
-                    <form method="POST" >
-                        <Form.Field {form} name="instanceCount">
-                          <Form.Control>
-                            {#snippet children({ props })}
-                              <Form.Label>Instance Count</Form.Label>
-                              {/* @ts-ignore */ null}
-                              <Input {...props} bind:value={project.metadata.config["limits.instances"]} />
-                            {/snippet}
-                          </Form.Control>
-                          <Form.Description>The total number of instances a user can create.</Form.Description>
-                          <Form.FieldErrors />
-                        </Form.Field>
-                    </form>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>name</div>
+                    <div>{project.metadata.description}</div>
+                    <div>Compute Instances</div>
+                    <div>{project.metadata.config["limits.instances"]}</div>
+                </div>
                 {/if}
             {:catch err}
-                <p>Error loading projects</p>
+                <p>Error loading project</p>
             {/await}
         </Card.Content>
     </Card.Root>

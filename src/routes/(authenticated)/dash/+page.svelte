@@ -3,6 +3,7 @@ import * as Card from "$lib/components/ui/card/index.js";
 import type { PageData } from "./$types";
 import Library from "lucide-svelte/icons/library-big"
 import CreditCard from "lucide-svelte/icons/credit-card"
+import Container from "lucide-svelte/icons/container"
 import Cpu from "lucide-svelte/icons/cpu"
 import Settings from "lucide-svelte/icons/settings"
 import Home from "lucide-svelte/icons/home"
@@ -33,6 +34,8 @@ let data: {
                 <Card.Content>
                     {#if info.Icon == "instances"}
                       <Cpu />
+                      {:else if info.Icon == "kubernetes"}
+                      <Container />
                       {:else if info.Icon == "library"}
                       <Library />
                       {:else if info.Icon == "settings"}

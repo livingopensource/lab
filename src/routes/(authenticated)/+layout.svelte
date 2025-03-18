@@ -23,7 +23,7 @@
 <Sidebar.Provider>
 <AppSidebar />
 <Sidebar.Inset>
-  <header class="flex h-16 w-max shrink-0 items-center gap-2 border-b px-4 absolute">
+  <header class="flex h-16 w-max shrink-0 items-center gap-2 border-b px-4 absolute overflow-hidden">
     <Sidebar.Trigger class="-ml-1"/>
     <Separator orientation="vertical" class="mr-2 h-4" />
     <Breadcrumb.Root>
