@@ -1,6 +1,6 @@
 <script lang="ts">
-    /* import DataTable from "./data-table.svelte";
-    import { columns } from "./columns"; */
+    import DataTable from "./data-table.svelte";
+    import { columns } from "./columns";
     import type { PageServerData } from "./$types";
     import { Button } from "$lib/components/ui/button";
   
@@ -24,6 +24,6 @@
     </div>
     <br />
     <div>
-      <!-- <DataTable data={data.data.instances} {columns} /> -->
+      <DataTable data={data.data.instances} {columns} />
     </div>
   </div>
