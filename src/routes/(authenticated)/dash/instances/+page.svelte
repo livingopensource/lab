@@ -18,7 +18,7 @@
     </div>
     <div>
       <Button class="float-right" href="/dash/instances/create">
-        Create
+        Create Instance
       </Button>
     </div>
   </div>
