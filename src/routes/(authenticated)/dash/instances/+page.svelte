@@ -1,10 +1,9 @@
 <script lang="ts">
-  import DataTable from "./data-table.svelte";
-  import { columns } from "./columns";
 	import type { PageServerData } from "./$types";
 	import { Button } from "$lib/components/ui/button";
+	import Instances from "./instances.svelte";
 
-  let data: {
+  let {data}: {
     data: PageServerData
   } = $props()
 </script>
@@ -24,6 +23,6 @@
   </div>
   <br />
   <div>
-    <DataTable data={data.data.instances} {columns} />
+    <Instances instances={data.instances}/>
   </div>
 </div>

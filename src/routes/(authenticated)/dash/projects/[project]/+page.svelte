@@ -1,8 +1,8 @@
 <script lang="ts">
-    import * as Card from "$lib/components/ui/card";
-    import { Skeleton } from "$lib/components/ui/skeleton";
+  import * as Card from "$lib/components/ui/card";
+  import { Skeleton } from "$lib/components/ui/skeleton";
 	import type { PageServerData } from "./$types";
-    export let data: PageServerData;
+  export let data: PageServerData;
 </script>
 
 <div class="container py-10 gap-5 place-content-evenly">

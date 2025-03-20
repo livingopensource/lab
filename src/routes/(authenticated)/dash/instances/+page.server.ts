@@ -1,7 +1,7 @@
 import {fetch, Agent} from 'undici';
 import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
-import type { instancesResponse, operationResponse } from '$lib/server/incus.types';
+import type { operationResponse } from '$lib/server/incus.types';
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import { hash } from '$lib/server/utils';
@@ -9,25 +9,32 @@ import { hash } from '$lib/server/utils';
 export async function load({parent}) {
     const { session } = await parent()
     const project = hash(session.user?.email ?? "")  ?? "none"
-    const res = await fetch(`${env.CLUSTER_URL}/1.0/instances?project=${project}&recursion=2`, {
-        dispatcher: new Agent({
-            connect: {
-                cert: fs.readFileSync(env.CERT),
-                key: fs.readFileSync(env.KEY),
-                rejectUnauthorized: false,
-            }
-        }),
-    });
-
-    if (!res.ok) {
-        throw new Error(res.statusText);
+    
+    try {
+        const res = fetch(`${env.CLUSTER_URL}/1.0/instances?project=${project}&recursion=2`, {
+            dispatcher: new Agent({
+                connect: {
+                    cert: fs.readFileSync(env.CERT),
+                    key: fs.readFileSync(env.KEY),
+                    rejectUnauthorized: false,
+                }
+            }),
+        });
+    
+        return {
+            project: project,
+            instances: res.then(res => {
+                if (!res.ok) throw new Error('Failed to fetch instances');
+                return res.json();
+            })
+        };
+    } catch (err) {
+        console.error(err);
+        return {
+            project: project,
+            instances: []
+        };
     }
-
-    const data = await res.json() as instancesResponse;
-    return {
-        project: project,
-        instances: data.metadata
-    };
 }
 
 export const actions = {
