@@ -19,7 +19,3 @@ export function isAdmin(email: string): boolean {
     const adminEmails = env.ADMINS.split(",")
     return adminEmails.includes(email)
 }
-
-export const fetchWithTimeout = new Promise((resolve, reject) => {
-    setTimeout(() => reject(new Error('Request timed out')), 10000);
-});
