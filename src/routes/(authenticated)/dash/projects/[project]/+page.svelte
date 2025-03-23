@@ -1,6 +1,7 @@
 <script lang="ts">
   import * as Card from "$lib/components/ui/card";
   import { Skeleton } from "$lib/components/ui/skeleton";
+	import Instances from "./instances.svelte";
 	import type { PageServerData } from "./$types";
   export let data: PageServerData;
 </script>
@@ -47,19 +48,20 @@
               </div>
             {:then project}
                 {#if project == null}
-                   <p> No project found for this email address</p>
+                   <p> No project found for this address</p>
                 {:else}
                 <div class="grid grid-cols-2 gap-4">
                     <div>name</div>
                     <div>{project.metadata.description}</div>
                     <div>Compute Instances</div>
                     <div>{project.metadata.config["limits.instances"]}</div>
-                    <div>Resources</div>
+                    <div>Instances</div>
                     <div>
-                      {#each project.metadata.used_by as resource}
-                        <p>{resource}</p><br />
-                      {/each}
+                      
                     </div>
+                </div>
+                <div>
+                  <Instances instances={data.instances}/>
                 </div>
                 {/if}
             {:catch err}

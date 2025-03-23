@@ -1,4 +1,5 @@
 <script lang="ts" generics="TData, TValue">
+   import {Skeleton} from "$lib/components/ui/skeleton";
   import { 
       type ColumnDef, 
       type SortingState,
@@ -17,9 +18,10 @@
   type DataTableProps<TData, TValue> = {
    columns: ColumnDef<TData, TValue>[];
    data: TData[];
+   loading: boolean;
   };
   
-  let { data, columns }: DataTableProps<TData, TValue> = $props();
+  let { data, columns, loading = false }: DataTableProps<TData, TValue> = $props();
   let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
   let sorting = $state<SortingState>([]);
   
@@ -77,7 +79,7 @@
      <Table.Row data-state={row.getIsSelected() && "selected"}>
       {#each row.getVisibleCells() as cell (cell.id)}
         {#if cell.id != row.id+"_actions"}
-          <Table.Cell onclick={() => goto(`/dash/instances/${row.getValue("name")}`)} class="cursor-pointer">
+          <Table.Cell>
            <FlexRender
             content={cell.column.columnDef.cell}
             context={cell.getContext()}
@@ -96,7 +98,32 @@
     {:else}
      <Table.Row>
       <Table.Cell colspan={columns.length} class="h-24 text-center">
-       You don't have any kubernetes clusters yet.
+       {#if loading}
+        <div class="grid grid-cols-3">
+          <div class="flex items-center space-x-4">
+            <div class="space-y-2">
+              <Skeleton class="h-4 w-[250px]" />
+              <Skeleton class="h-4 w-[200px]" />
+            </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <div class="space-y-2">
+                <Skeleton class="h-4 w-[250px]" />
+                <Skeleton class="h-4 w-[200px]" />
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <div class="space-y-2">
+                <Skeleton class="h-4 w-[250px]" />
+                <Skeleton class="h-4 w-[200px]" />
+              </div>
+            </div>
+        </div>
+       {:else}
+         This project has no instances yet.
+       {/if}
       </Table.Cell>
      </Table.Row>
     {/each}

@@ -2,10 +2,18 @@ import { toast } from "svelte-sonner"
 import { json } from "@sveltejs/kit"
 import type { operationResponse } from "$lib/server/incus.types"
 
-export async function powerOn(instance: string) {
-    const res = await fetch(`/api/${instance}/state?state=start`, {
-        method: "put"
-    })
+export async function powerOn(instance: string, project: string = "") {
+    let res;
+    if (project != "") {
+        res = await fetch(`/api/${instance}/state?state=start&project=${project}`, {
+            method: "put"
+        })
+    } else {
+        res = await fetch(`/api/${instance}/state?state=start`, {
+            method: "put"
+        })
+    }
+    
     if (!res.ok) {
        toast.error("Instance power on error", {
            description: "Unable to power on instance, contact support if issue persists"
@@ -17,10 +25,17 @@ export async function powerOn(instance: string) {
     })
 }
 
-export async function powerOff(instance: string) {
-    const res = await fetch(`/api/${instance}/state?state=stop`, {
-        method: "put"
-    })
+export async function powerOff(instance: string,  project: string = "") {
+    let res;
+    if (project != "") {
+        res = await fetch(`/api/${instance}/state?state=stop&project=${project}`, {
+            method: "put"
+        })
+    } else {
+        res = await fetch(`/api/${instance}/state?state=stop`, {
+            method: "put"
+        })
+    }
 
     if (!res.ok) {
        toast.error(`Instance power off error`, {

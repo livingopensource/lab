@@ -32,6 +32,7 @@ export interface instanceResponse {
         created_at: string,
         last_used_at: string,
         type: string,
+        project: string,
         config: {
             "image.architecture": string,
             "image.description": string,

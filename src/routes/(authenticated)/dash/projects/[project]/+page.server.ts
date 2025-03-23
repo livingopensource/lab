@@ -28,12 +28,36 @@ export async function load({locals, params}) {
   
   if (!res.ok) {
     return {
+        instances: null,
+        projectDetails: null,
+    }
+  }
+  
+  let instanceResponse 
+  try {
+    instanceResponse = fetch(`${env.CLUSTER_URL}/1.0/instances?project=${params.project}&recursion=2`, {
+        dispatcher: new Agent({
+            connect: {
+                cert: fs.readFileSync(env.CERT),
+                key: fs.readFileSync(env.KEY),
+                rejectUnauthorized: false,
+            }
+        }),
+    });
+  } catch (err) {
+    console.log(err)
+    return {
+        instances: null,
         projectDetails: null,
     }
   }
   
   const projectDetails = res.json() as unknown as projectInterface
   return {
+      instances: instanceResponse.then(res => {
+        if (!res.ok) throw new Error('Failed to fetch instances');
+        return res.json();
+    }),
       projectDetails,
   }
 
