@@ -7,6 +7,7 @@
   import { page } from "$app/stores";
   import { Toaster } from "$lib/components/ui/sonner";
 	import { Separator } from '$lib/components/ui/separator';
+	import { truncateString } from "$lib/utils";
   // Generate breadcrumb items from the current URL
   const breadcrumbItems = derived(page, ($page) => {
     const segments = $page.url.pathname.split('/').filter(Boolean);
@@ -46,7 +47,7 @@
             {#if i < $breadcrumbItems.length - 1}
               <Breadcrumb.Link href={item.href}>{item.name}</Breadcrumb.Link>
             {:else}
-              <Breadcrumb.Page>{item.name}</Breadcrumb.Page>
+              <Breadcrumb.Page>{truncateString(item.name, 12)}</Breadcrumb.Page>
             {/if}
           </Breadcrumb.Item>
           {#if i < $breadcrumbItems.length - 1}
