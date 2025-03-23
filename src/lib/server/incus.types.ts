@@ -212,7 +212,8 @@ export type projectInterface = {
             "features.storage.buckets": string,
             "limits.cpu": string,
             "limits.instances": string
-        }
+        },
+        used_by: string[]
     }
 }
 

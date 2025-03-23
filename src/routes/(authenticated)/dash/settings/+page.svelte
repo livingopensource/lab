@@ -11,10 +11,13 @@
   import { zodClient } from "sveltekit-superforms/adapters";
   import { superForm } from "sveltekit-superforms";
   import { formSchema } from "./schema";
-	import { Button } from "$lib/components/ui/button";
-	import { Search } from "lucide-svelte";
+	import { Button, buttonVariants } from "$lib/components/ui/button";
+	import { Search, Trash } from "lucide-svelte";
+  import * as AlertDialog from "$lib/components/ui/alert-dialog/index"
+  import { invalidateAll } from "$app/navigation";
 
     let {data} = $props()
+    let openAlert = $state(false);
 
     const form = superForm(data.form, {
     validators: zodClient(formSchema),
@@ -150,9 +153,47 @@
                     </div>
                   </div>
                 {:then projects}
+                  <div class="grid grid-cols-2 gap-4">
                     {#each projects.metadata as project}
+                      <div>
                         <a href="/dash/projects/{project.split("/")[project.split("/").length - 1]}">{project.split("/")[project.split("/").length - 1]}</a> <br />
+                      </div>
+                      <div>
+                        <AlertDialog.Root>
+                          <AlertDialog.Trigger class={buttonVariants({ variant: "secondary" })}>
+                              <Trash />
+                          </AlertDialog.Trigger>
+                          <AlertDialog.Content>
+                            <AlertDialog.Header>
+                              <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+                              <AlertDialog.Description>
+                                This action cannot be undone. This will permanently delete this project {project.split("/")[project.split("/").length - 1]} and remove the associated data.
+                              </AlertDialog.Description>
+                            </AlertDialog.Header>
+                            <AlertDialog.Footer>
+                              <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+                              <AlertDialog.Action onclick={ async () => {
+                                const res = await fetch(`/api/projects/${project.split("/")[project.split("/").length - 1]}`, {
+                                  method: "DELETE"
+                                })
+                                if (res.ok) {
+                                  toast.success("Project deleted", {
+                                    description: "Instance has been successfully deleted"
+                                  })
+                                  setTimeout(() => invalidateAll(), 1000)
+                                } else {
+                                  toast.error("Project delete failed", {
+                                    description: `Unable to delete project`
+                                  })
+                                }
+                               // openAlert = false
+                              }}>Continue</AlertDialog.Action>
+                            </AlertDialog.Footer>
+                          </AlertDialog.Content>
+                        </AlertDialog.Root>
+                      </div>
                     {/each}
+                  </div>
                 {:catch err}
                     <p>Error loading projects</p>
                 {/await}

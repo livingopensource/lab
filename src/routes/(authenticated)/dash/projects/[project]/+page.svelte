@@ -15,7 +15,7 @@
                 Manage user projects configurations.
             </Card.Description>
         </Card.Header>
-        <Card.Content>
+        <Card.Content class="overflow-x-auto">
             <div class="grid grid-cols-2 gap-4 place-content-between">
               <div class="flex h-5 items-center space-x-4 text-sm mb-10">
 
@@ -54,6 +54,12 @@
                     <div>{project.metadata.description}</div>
                     <div>Compute Instances</div>
                     <div>{project.metadata.config["limits.instances"]}</div>
+                    <div>Resources</div>
+                    <div>
+                      {#each project.metadata.used_by as resource}
+                        <p>{resource}</p><br />
+                      {/each}
+                    </div>
                 </div>
                 {/if}
             {:catch err}
