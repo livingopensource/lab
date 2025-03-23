@@ -43,7 +43,7 @@
       <AlertDialog.Footer>
         <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
         <AlertDialog.Action onclick={ async () => {
-          const res = await fetch(`/api/${instance.name}`, {
+          const res = await fetch(`/api/${instance.name}?project=${instance.project}`, {
             method: "DELETE"
           })
           if (res.ok) {

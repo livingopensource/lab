@@ -3,14 +3,18 @@ import {fetch, Agent} from 'undici';
 import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import type { operationResponse } from '$lib/server/incus.types';
-import { hash } from '$lib/server/utils';
+import { hash, isAdmin } from '$lib/server/utils';
 
-export const DELETE = async ({locals, params}) => {
+export const DELETE = async ({locals, url, params}) => {
     const session = await locals.auth()
     if (!session) {
         return json(403, {})
     }
-    const project = hash(session?.user?.email ?? "") ?? "none";
+    let project = hash(session?.user?.email ?? "") ?? "none";
+    const userProject = url.searchParams.get("project")
+    if (userProject && session.user && session.user.email && isAdmin(session.user.email)) {
+        project = userProject
+    }
     const res = await fetch(`${env.CLUSTER_URL}/1.0/instances/${params.name}?project=${project}`, {
         method: 'DELETE',
         headers: {

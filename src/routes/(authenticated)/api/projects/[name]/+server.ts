@@ -3,10 +3,16 @@ import {fetch, Agent} from 'undici';
 import { env } from '$env/dynamic/private';
 import * as fs from 'node:fs';
 import type { operationResponse } from '$lib/server/incus.types';
+import { isAdmin } from '$lib/server/utils';
 
 export const DELETE = async ({locals, params}) => {
     const session = await locals.auth()
     if (session == null) {
+        return json(403, {})
+    }
+
+    // Make sure only admins can delete projects
+    if (!session.user || !session.user.email || !isAdmin(session.user.email)) {
         return json(403, {})
     }
 
