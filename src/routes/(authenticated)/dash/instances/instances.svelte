@@ -11,8 +11,11 @@
       <DataTable loading={false} data={instances.metadata} {columns}/>
     {:catch error}
     <div class="flex items-center space-x-4">
+      <div>
+        <img src="/error.svg" alt="error" class="h-auto w-full" />
+      </div>
         <div class="space-y-2">
-            {error.message}
+            <p class="font-bold">{error.message}</p>
             <br />
         </div> 
     </div>

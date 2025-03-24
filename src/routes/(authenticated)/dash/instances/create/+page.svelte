@@ -64,66 +64,71 @@
     <div>
     </div>
   </div>
-    <div>
-      <form method="POST" use:enhance>
-        <Form.Field {form} name="instanceName">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Form.Label>Name</Form.Label>
-              <Input {...props} bind:value={$formData.instanceName} disabled={!data.canCreate} />
-            {/snippet}
-          </Form.Control>
-          <Form.Description>The instance name.</Form.Description>
-          <Form.FieldErrors />
-        </Form.Field>
-        
-        <Form.Field {form} name="image">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Form.Label>Image</Form.Label>
-              <Select.Root
-                type="single"
-                bind:value={$formData.image}
-                name={props.name}
-                onValueChange={(v) => {
-                  $formData.instanceType = images.metadata.find((i) => i.aliases[0].name === v)?.type || "";
-                }}
-              >
-                <Select.Trigger {...props}>
-                  {$formData.image
-                    ? $formData.image
-                    : "Select an image to use"}
-                </Select.Trigger>
-                <Select.Content>
-                  {#each images.metadata as image}
-                    <Select.Item value={image.aliases[0].name} label="{image.properties.os} {image.properties.release} ({image.properties.variant} {image.type})" />
-                  {/each}
-                </Select.Content>
-              </Select.Root>
-            {/snippet}
-          </Form.Control>
-          <Form.Description>
-            Select an operating system to use with your instance.
-          </Form.Description>
-          <Form.FieldErrors />
-        </Form.Field>
-
-        <Form.Field {form} name="instanceType">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Input {...props} bind:value={$formData.instanceType} type="hidden"/>
-            {/snippet}
-          </Form.Control>
-          <Form.FieldErrors />
-        </Form.Field>
-
-        <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
-        {#if !data.canCreate}
-          <div class="flex gap-2">
-            <div class="my-5"><Warning /></div>
-            <div><p class="text-sm text-foreground m-5"> {data.message} </p></div>
-          </div>
-        {/if}
-      </form>
+    <div class="grid md:grid-cols-2 space-x-4">
+      <div>
+        <form method="POST" use:enhance>
+          <Form.Field {form} name="instanceName">
+            <Form.Control>
+              {#snippet children({ props })}
+                <Form.Label>Name</Form.Label>
+                <Input {...props} bind:value={$formData.instanceName} disabled={!data.canCreate} />
+              {/snippet}
+            </Form.Control>
+            <Form.Description>The instance name.</Form.Description>
+            <Form.FieldErrors />
+          </Form.Field>
+          
+          <Form.Field {form} name="image">
+            <Form.Control>
+              {#snippet children({ props })}
+                <Form.Label>Image</Form.Label>
+                <Select.Root
+                  type="single"
+                  bind:value={$formData.image}
+                  name={props.name}
+                  onValueChange={(v) => {
+                    $formData.instanceType = images.metadata.find((i) => i.aliases[0].name === v)?.type || "";
+                  }}
+                >
+                  <Select.Trigger {...props}>
+                    {$formData.image
+                      ? $formData.image
+                      : "Select an image to use"}
+                  </Select.Trigger>
+                  <Select.Content>
+                    {#each images.metadata as image}
+                      <Select.Item value={image.aliases[0].name} label="{image.properties.os} {image.properties.release} ({image.properties.variant} {image.type})" />
+                    {/each}
+                  </Select.Content>
+                </Select.Root>
+              {/snippet}
+            </Form.Control>
+            <Form.Description>
+              Select an operating system to use with your instance.
+            </Form.Description>
+            <Form.FieldErrors />
+          </Form.Field>
+  
+          <Form.Field {form} name="instanceType">
+            <Form.Control>
+              {#snippet children({ props })}
+                <Input {...props} bind:value={$formData.instanceType} type="hidden"/>
+              {/snippet}
+            </Form.Control>
+            <Form.FieldErrors />
+          </Form.Field>
+  
+          <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
+          {#if !data.canCreate}
+            <div class="flex gap-2">
+              <div class="my-5"><Warning /></div>
+              <div><p class="text-sm text-foreground m-5"> {data.message} </p></div>
+            </div>
+          {/if}
+        </form>
+      </div>
+      <div>
+        <img src="/computer-grid.svg" alt="computer grid" class="h-auto w-full" />
+      </div>
     </div>
 </div>

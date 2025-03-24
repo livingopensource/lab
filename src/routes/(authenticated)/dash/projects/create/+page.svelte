@@ -41,40 +41,45 @@
       <div>
       </div>
     </div>
-      <div>
-        <form method="POST" >
-          <Form.Field {form} name="project">
-            <Form.Control>
-              {#snippet children({ props })}
-                <Form.Label>Project Name</Form.Label>
-                <Input {...props} bind:value={$formData.project} />
-              {/snippet}
-            </Form.Control>
-            <Form.Description>The project name (email).</Form.Description>
-            <Form.FieldErrors />
-          </Form.Field>
-          
-          <Form.Field {form} name="instanceCount">
-            <Form.Control>
-              {#snippet children({ props })}
-                <Form.Label>Instance Count </Form.Label>
-                <Input {...props} bind:value={$formData.instanceCount} type="number"/>
-              {/snippet}
-            </Form.Control>
-            <Form.FieldErrors />
-          </Form.Field>
-  
-          <Form.Field {form} name="kubernetesNodeCount">
-            <Form.Control>
-              {#snippet children({ props })}
-                <Form.Label>Kubernetes Nodes</Form.Label>
-                <Input {...props} bind:value={$formData.kubernetesNodeCount} type="number"/>
-              {/snippet}
-            </Form.Control>
-            <Form.FieldErrors />
-          </Form.Field>
-  
-          <Form.Button type="submit">Create</Form.Button>
-        </form>
+      <div class="grid md:grid-cols-2 space-x-4">
+        <div>
+          <form method="POST" >
+            <Form.Field {form} name="project">
+              <Form.Control>
+                {#snippet children({ props })}
+                  <Form.Label>Project Name</Form.Label>
+                  <Input {...props} bind:value={$formData.project} />
+                {/snippet}
+              </Form.Control>
+              <Form.Description>The project name (email).</Form.Description>
+              <Form.FieldErrors />
+            </Form.Field>
+            
+            <Form.Field {form} name="instanceCount">
+              <Form.Control>
+                {#snippet children({ props })}
+                  <Form.Label>Instance Count </Form.Label>
+                  <Input {...props} bind:value={$formData.instanceCount} type="number"/>
+                {/snippet}
+              </Form.Control>
+              <Form.FieldErrors />
+            </Form.Field>
+    
+            <Form.Field {form} name="kubernetesNodeCount">
+              <Form.Control>
+                {#snippet children({ props })}
+                  <Form.Label>Kubernetes Nodes</Form.Label>
+                  <Input {...props} bind:value={$formData.kubernetesNodeCount} type="number"/>
+                {/snippet}
+              </Form.Control>
+              <Form.FieldErrors />
+            </Form.Field>
+    
+            <Form.Button type="submit">Create</Form.Button>
+          </form>
+        </div>
+        <div>
+          <img src="/cluster.svg" alt="Create Instance" class="w-auto h-full" />
+        </div>
       </div>
   </div>

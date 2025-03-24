@@ -6,7 +6,6 @@ import { zod } from "sveltekit-superforms/adapters";
 import { env } from "$env/dynamic/private";
 import { Agent, fetch } from "undici";
 import * as fs from 'node:fs';
-import type { projectsInterface } from "$lib/server/incus.types";
 
 export async function load({locals}) {
   const session = await locals.auth()
@@ -18,7 +17,7 @@ export async function load({locals}) {
       name: session.user.name!,
       email: session.user.email
   }
-  const res = await fetch(`${env.CLUSTER_URL}/1.0/projects`, {
+  const res = fetch(`${env.CLUSTER_URL}/1.0/projects`, {
       dispatcher: new Agent({
           connect: {
               cert: fs.readFileSync(env.CERT),
@@ -28,14 +27,12 @@ export async function load({locals}) {
       }),
   });
   
-  if (!res.ok) {
-      throw new Error(res.statusText);
-  }
-
-  const projects = res.json() as unknown as projectsInterface
 
   return {
-      projects:  projects,
+      projects:  res.then(res => {
+          if (!res.ok) throw new Error('Failed to fetch instances');
+          return res.json();
+      }),
       isAdmin: isAdmin(session.user?.email),
       form: await superValidate(userData, zod(formSchema))
   }

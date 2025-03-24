@@ -64,26 +64,31 @@
       <div>
       </div>
     </div>
-      <div>
-        <form method="POST" use:enhance>
-          <Form.Field {form} name="name">
-            <Form.Control>
-              {#snippet children({ props })}
-                <Form.Label>Name</Form.Label>
-                <Input {...props} bind:value={$formData.name} disabled={!data.canCreate} />
-              {/snippet}
-            </Form.Control>
-            <Form.Description>The cluster name.</Form.Description>
-            <Form.FieldErrors />
-          </Form.Field>
-  
-          <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
-          {#if !data.canCreate}
-            <div class="flex gap-2">
-              <div class="my-5"><Warning /></div>
-              <div><p class="text-sm text-foreground m-5"> {data.message} </p></div>
-            </div>
-          {/if}
-        </form>
+      <div class="grid md:grid-cols-2 space-x-4">
+        <div>
+          <form method="POST" use:enhance>
+            <Form.Field {form} name="name">
+              <Form.Control>
+                {#snippet children({ props })}
+                  <Form.Label>Name</Form.Label>
+                  <Input {...props} bind:value={$formData.name} disabled={!data.canCreate} />
+                {/snippet}
+              </Form.Control>
+              <Form.Description>The cluster name.</Form.Description>
+              <Form.FieldErrors />
+            </Form.Field>
+    
+            <Form.Button disabled={!data.canCreate} type="submit">Create</Form.Button>
+            {#if !data.canCreate}
+              <div class="flex gap-2">
+                <div class="my-5"><Warning /></div>
+                <div><p class="text-sm text-foreground m-5"> {data.message} </p></div>
+              </div>
+            {/if}
+          </form>
+        </div>
+        <div>
+          <img src="/ship.svg" alt="Kubernetes" class="w-auto h-full" />
+        </div>
       </div>
   </div>

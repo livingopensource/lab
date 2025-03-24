@@ -58,7 +58,9 @@
           </Card.Header>
           <Card.Content>
               <div class="grid md:grid-cols-2">
-                <div></div>
+                <div>
+                  <img src="/settings.svg" alt="settings" class="w-auto h-full" />
+                </div>
                 <div>
                     <Avatar.Root>
                       <Avatar.Image src={$page.data.session?.user?.image} alt="user avatar" />
@@ -154,7 +156,7 @@
                   </div>
                 {:then projects}
                   <div class="grid grid-cols-2 gap-4">
-                    {#each projects.metadata as project}
+                    {#each (projects as any).metadata as project}
                       <div>
                         <a href="/dash/projects/{project.split("/")[project.split("/").length - 1]}">{project.split("/")[project.split("/").length - 1]}</a> <br />
                       </div>
@@ -195,10 +197,13 @@
                     {/each}
                   </div>
                 {:catch err}
-                    <p>Error loading projects</p>
+                <div>
+                  <img src="/error.svg" alt="error" class="h-auto w-auto" />
+                  <p class="font-bold">Error loading projects</p>
+                </div>
                 {/await}
             </Card.Content>
         </Card.Root>
     </div>
-    {/if}
+{/if}
 </div>
