@@ -1,6 +1,7 @@
 <script lang="ts">
-    import * as Form from "$lib/components/ui/form/index.js";
-    import { Input } from "$lib/components/ui/input/index.js";
+    import * as Form from "$lib/components/ui/form";
+    import { Input } from "$lib/components/ui/input";
+    import * as Card from "$lib/components/ui/card";
     import { formSchema } from "./schema";
     import {
       superForm,
@@ -41,45 +42,57 @@
       <div>
       </div>
     </div>
-      <div class="grid md:grid-cols-2 space-x-4">
-        <div>
-          <form method="POST" >
-            <Form.Field {form} name="project">
-              <Form.Control>
-                {#snippet children({ props })}
-                  <Form.Label>Project Name</Form.Label>
-                  <Input {...props} bind:value={$formData.project} />
-                {/snippet}
-              </Form.Control>
-              <Form.Description>The project name (email).</Form.Description>
-              <Form.FieldErrors />
-            </Form.Field>
-            
-            <Form.Field {form} name="instanceCount">
-              <Form.Control>
-                {#snippet children({ props })}
-                  <Form.Label>Instance Count </Form.Label>
-                  <Input {...props} bind:value={$formData.instanceCount} type="number"/>
-                {/snippet}
-              </Form.Control>
-              <Form.FieldErrors />
-            </Form.Field>
-    
-            <Form.Field {form} name="kubernetesNodeCount">
-              <Form.Control>
-                {#snippet children({ props })}
-                  <Form.Label>Kubernetes Nodes</Form.Label>
-                  <Input {...props} bind:value={$formData.kubernetesNodeCount} type="number"/>
-                {/snippet}
-              </Form.Control>
-              <Form.FieldErrors />
-            </Form.Field>
-    
-            <Form.Button type="submit">Create</Form.Button>
-          </form>
-        </div>
-        <div>
-          <img src="/cluster.svg" alt="Create Instance" class="w-auto h-full" />
-        </div>
+    <Card.Root>
+      <Card.Header>
+          <Card.Title>
+              Create User Project
+          </Card.Title>
+          <Card.Description>
+              Manage user project resource allocations.
+          </Card.Description>
+      </Card.Header>
+      <Card.Content>
+        <div class="grid md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <form method="POST" >
+              <Form.Field {form} name="project">
+                <Form.Control>
+                  {#snippet children({ props })}
+                    <Form.Label>Project Name</Form.Label>
+                    <Input {...props} bind:value={$formData.project} />
+                  {/snippet}
+                </Form.Control>
+                <Form.Description>The project name (email).</Form.Description>
+                <Form.FieldErrors />
+              </Form.Field>
+              
+              <Form.Field {form} name="instanceCount">
+                <Form.Control>
+                  {#snippet children({ props })}
+                    <Form.Label>Instance Count </Form.Label>
+                    <Input {...props} bind:value={$formData.instanceCount} type="number"/>
+                  {/snippet}
+                </Form.Control>
+                <Form.FieldErrors />
+              </Form.Field>
+      
+              <Form.Field {form} name="kubernetesNodeCount">
+                <Form.Control>
+                  {#snippet children({ props })}
+                    <Form.Label>Kubernetes Nodes</Form.Label>
+                    <Input {...props} bind:value={$formData.kubernetesNodeCount} type="number"/>
+                  {/snippet}
+                </Form.Control>
+                <Form.FieldErrors />
+              </Form.Field>
+      
+              <Form.Button type="submit">Create</Form.Button>
+            </form>
+          </div>
+          <div class="order-1 md:order-2">
+            <img src="/cluster.svg" alt="Create Instance" class="w-auto h-full" />
+          </div>
       </div>
+      </Card.Content>
+    </Card.Root>
   </div>

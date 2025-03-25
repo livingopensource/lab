@@ -9,7 +9,8 @@
   import type { imagesResponse } from '$lib/server/incus.types';
 	import { onMount } from "svelte";
 	import { toast } from "svelte-sonner";
-	import * as Select from "$lib/components/ui/select/index";
+	import * as Select from "$lib/components/ui/select";
+  import * as Card from "$lib/components/ui/card";
 	import { goto } from "$app/navigation";
   import Warning from "lucide-svelte/icons/triangle-alert";
  
@@ -30,6 +31,7 @@
   });
  
   const { form: formData, enhance } = form;
+  // svelte-ignore non_reactive_update
   let images: imagesResponse
 
   onMount(async () => {
@@ -64,8 +66,18 @@
     <div>
     </div>
   </div>
-    <div class="grid md:grid-cols-2 space-x-4">
-      <div>
+  <Card.Root>
+    <Card.Header>
+        <Card.Title>
+            Create Virtual Machine
+        </Card.Title>
+        <Card.Description>
+            Create Virtual Machine lab instance.
+        </Card.Description>
+    </Card.Header>
+    <Card.Content>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="order-2 md:order-1">
         <form method="POST" use:enhance>
           <Form.Field {form} name="instanceName">
             <Form.Control>
@@ -127,8 +139,10 @@
           {/if}
         </form>
       </div>
-      <div>
+      <div class="order-1 md:order-2">
         <img src="/computer-grid.svg" alt="computer grid" class="h-auto w-full" />
       </div>
     </div>
+    </Card.Content>
+    </Card.Root>
 </div>

@@ -7,10 +7,10 @@
     } from "sveltekit-superforms";
     import { zodClient } from "sveltekit-superforms/adapters";
     import type { imagesResponse } from '$lib/server/incus.types';
-      import { onMount } from "svelte";
-      import { toast } from "svelte-sonner";
-      import * as Select from "$lib/components/ui/select/index";
-      import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
+    import { toast } from "svelte-sonner";
+    import * as Card from "$lib/components/ui/card";
+    import { goto } from "$app/navigation";
     import Warning from "lucide-svelte/icons/triangle-alert";
    
     let {data} = $props()
@@ -64,8 +64,18 @@
       <div>
       </div>
     </div>
+    <Card.Root>
+      <Card.Header>
+          <Card.Title>
+              Create Kubernetes Cluster
+          </Card.Title>
+          <Card.Description>
+              Create a new Kubernetes cluster.
+          </Card.Description>
+      </Card.Header>
+      <Card.Content>
       <div class="grid md:grid-cols-2 space-x-4">
-        <div>
+        <div class="order-2 md:order-1">
           <form method="POST" use:enhance>
             <Form.Field {form} name="name">
               <Form.Control>
@@ -87,8 +97,10 @@
             {/if}
           </form>
         </div>
-        <div>
+        <div class="order-1 md:order-2">
           <img src="/ship.svg" alt="Kubernetes" class="w-auto h-full" />
         </div>
       </div>
+      </Card.Content>
+    </Card.Root>
   </div>
