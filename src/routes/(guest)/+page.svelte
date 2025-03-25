@@ -1,89 +1,21 @@
 <script lang="ts">
-   import { onMount, onDestroy } from 'svelte';
-   import { mode } from 'mode-watcher';
-   import { slide } from 'svelte/transition';
-   import * as Card from "$lib/components/ui/card";
-   import { Badge } from '$lib/components/ui/badge';
-   import { goto } from '$app/navigation';
+  import { onMount, onDestroy } from 'svelte';
+  import { slide } from 'svelte/transition';
+  import * as Card from "$lib/components/ui/card";
+  import { Badge } from '$lib/components/ui/badge';
+  import { goto } from '$app/navigation';
+	import Terminal from '$lib/components/los/terminal.svelte';
 	
 	let greetings = ['Linux', 'Docker', 'Kubernetes'];
-    // Define themes
-    const darkTheme = {
-      background: "#1E1E1E",
-      foreground: "#D4D4D4",
-      cursor: "white",
-    };
-  
-    const lightTheme = {
-      background: "#FAFAFA",
-      foreground: "#333333",
-      cursor: "black",
-    };
     
-	  let index = $state(0);
-	  let roller: string | number | NodeJS.Timeout | undefined;
-    let terminalContainer: HTMLElement;
-    let theme = $derived($mode == "light" ? lightTheme : darkTheme)
+	let index = $state(0);
+	let roller: string | number | NodeJS.Timeout | undefined;
 
     onMount(async () => {
       roller = setInterval(() => {
-	  	if (index === greetings.length - 1) index = 0;
-	  	else index++;
-	  }, 3000);
-
-      let xterm  = (await import("@xterm/xterm"));
-      const term = new xterm.Terminal({
-        cursorBlink: true,  // Makes it look interactive
-        fontSize: 14,
-        theme: theme, // Dark theme
-        fontFamily: "monospace",
-        lineHeight: 1.2,
-        scrollback: 0,
-        cursorWidth: 1,
-        rescaleOverlappingGlyphs: true,
-      });
-  
-      term.open(terminalContainer);
-  
-      // Simulated Terminal Output
-      function typeCommand(command: string | any[], delay = 100) {
-        return new Promise<void>((resolve) => {
-          let i = 0;
-          const interval = setInterval(() => {
-            if (i < command.length) {
-              term.write(command[i]);
-              i++;
-            } else {
-              clearInterval(interval);
-              term.write("\r\n");
-              resolve();
-            }
-          }, delay);
-        });
-      }
-  
-      async function runAnimation() {
-        term.writeln("Welcome to Living Open Source Labs! 🌎");
-        term.writeln("Launching interactive environment...\r\n");
-  
-        await typeCommand("ls -la", 80);
-        await new Promise((r) => setTimeout(r, 1000));
-        term.writeln("drwxr-xr-x  2 user user 4096 Mar 25 10:00 /workspace");
-        term.writeln("-rw-r--r--  1 user user  124 Mar 25 10:00 README.md");
-  
-        await typeCommand("docker run hello-world", 80);
-        await new Promise((r) => setTimeout(r, 1500));
-        /* term.writeln("\nHello from Docker!\nThis message shows that your installation appears to be working correctly.\n"); */
-  
-        await typeCommand("kubectl get pods", 80);
-        await new Promise((r) => setTimeout(r, 1200));
-        term.writeln("NAME                        READY   STATUS    RESTARTS   AGE");
-        term.writeln("my-app-12345                1/1     Running   0          5m");
-  
-        term.writeln("\nEnvironment Ready! 🚀 Start experimenting.");
-      }
-  
-      runAnimation();
+	    	if (index === greetings.length - 1) index = 0;
+	    	else index++;
+	    }, 3000);
     });
 
     onDestroy(() => {
@@ -108,8 +40,10 @@
 
     <div class="grid md:grid-cols-2 mt-10 mb-10 gap-4">
         <!-- Container for Xterm.js -->
-        <div bind:this={terminalContainer} class="h-full border border-gray-700 rounded-xl overflow-hidden"></div>
-        <div class="h-full border border-gray-700 rounded-xl overflow-hidden p-10">
+        <div class="h-full border border-gray-700 rounded-xl">
+          <Terminal />
+        </div>
+        <div class="h-full border border-gray-700 rounded-xl overflow-hidden">
           <img src="/learner.svg" alt="linux's banner" class="h-64 w-full rounded-md object-cover"/>
           <p class="text-center font-light text-foreground mt-4 max-w-[42rem] text-lg text-balance md:text-center font-semibold md:text-3xl lg:text-3xl sm:text-3xl text-2x">
             <span>
