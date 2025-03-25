@@ -20,9 +20,8 @@
       cursor: "black",
     };
     
-	let index = $state(0);
-	let roller: string | number | NodeJS.Timeout | undefined;
-
+	  let index = $state(0);
+	  let roller: string | number | NodeJS.Timeout | undefined;
     let terminalContainer: HTMLElement;
     let theme = $derived($mode == "light" ? lightTheme : darkTheme)
 
@@ -37,6 +36,11 @@
         cursorBlink: true,  // Makes it look interactive
         fontSize: 14,
         theme: theme, // Dark theme
+        fontFamily: "monospace",
+        lineHeight: 1.2,
+        scrollback: 0,
+        cursorWidth: 1,
+        rescaleOverlappingGlyphs: true,
       });
   
       term.open(terminalContainer);
@@ -69,7 +73,7 @@
   
         await typeCommand("docker run hello-world", 80);
         await new Promise((r) => setTimeout(r, 1500));
-        term.writeln("\nHello from Docker!\nThis message shows that your installation appears to be working correctly.\n");
+        /* term.writeln("\nHello from Docker!\nThis message shows that your installation appears to be working correctly.\n"); */
   
         await typeCommand("kubectl get pods", 80);
         await new Promise((r) => setTimeout(r, 1200));
@@ -104,7 +108,7 @@
 
     <div class="grid md:grid-cols-2 mt-10 mb-10 gap-4">
         <!-- Container for Xterm.js -->
-        <div bind:this={terminalContainer} class="h-full border border-gray-700 rounded-xl overflow-hidden p-10"></div>
+        <div bind:this={terminalContainer} class="h-full border border-gray-700 rounded-xl overflow-hidden"></div>
         <div class="h-full border border-gray-700 rounded-xl overflow-hidden p-10">
           <img src="/learner.svg" alt="linux's banner" class="h-64 w-full rounded-md object-cover"/>
           <p class="text-center font-light text-foreground mt-4 max-w-[42rem] text-lg text-balance md:text-center font-semibold md:text-3xl lg:text-3xl sm:text-3xl text-2x">
