@@ -102,12 +102,12 @@
         <p></p>
     </div>
 
-    <div class="grid grid-cols-2 justify-items-center mt-10 mb-10 GAP-4">
+    <div class="grid md:grid-cols-2 mt-10 mb-10 gap-4">
         <!-- Container for Xterm.js -->
         <div bind:this={terminalContainer} class="h-full border border-gray-700 rounded-xl overflow-hidden p-10"></div>
         <div class="h-full border border-gray-700 rounded-xl overflow-hidden p-10">
-          <p class="text-center font-light text-foreground mt-4 max-w-[42rem] text-lg sm:text-xl">
-            Building modern application is a complex process that requires a lot of time and effort.
+          <img src="/learner.svg" alt="linux's banner" class="h-64 w-full rounded-md object-cover"/>
+          <p class="text-center font-light text-foreground mt-4 max-w-[42rem] text-lg text-balance md:text-center font-semibold md:text-3xl lg:text-3xl sm:text-3xl text-2x">
             <span>
               We provide the environment for you to test, experiment and learn.
             </span>
