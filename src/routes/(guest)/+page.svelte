@@ -44,7 +44,7 @@
           <Terminal />
         </div>
         <div class="h-full border border-gray-700 rounded-xl overflow-hidden">
-          <img src="/learner.svg" alt="linux's banner" class="h-64 w-full rounded-md object-cover"/>
+          <img src="/cloud-learner.jpeg" alt="linux's banner" class="h-64 w-full rounded-md object-cover"/>
           <p class="text-center font-light text-foreground mt-4 max-w-[42rem] text-lg text-balance md:text-center font-semibold md:text-3xl lg:text-3xl sm:text-3xl text-2x">
             <span>
               We provide the environment for you to test, experiment and learn.
