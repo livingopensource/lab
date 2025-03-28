@@ -18,7 +18,6 @@
 			<Button>
 				<img src="google-logo.svg" width="25" height="25" alt="google logo"><SignIn provider="google" />
 			</Button>
-			|-
 			<Button>
 				<img src="github-logo.svg" width="25" height="25" alt="github logo"><SignIn provider="github" />
 			</Button>
