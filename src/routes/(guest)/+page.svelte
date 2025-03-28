@@ -106,7 +106,7 @@
                       <h1 class="mb-3 text-pretty text-2xl font-semibold truncate">Kubernetes Training</h1>
                     </div>
                     <div>
-                      <h1>Hnads on kubernetes training</h1>
+                      <h1>Hands on kubernetes training</h1>
                     </div>
                   </div>
                 </Card.Content>
