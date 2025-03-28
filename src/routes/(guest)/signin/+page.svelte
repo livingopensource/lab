@@ -2,7 +2,6 @@
 <script lang="ts">
     import { SignIn } from "@auth/sveltekit/components"
     import { Button } from '$lib/components/ui/button/index'
-	import SwiftCloud from 'lucide-svelte/icons/cloud'
 </script>
 
  <div class="md:hidden">
@@ -15,9 +14,15 @@
 				</p>
 			</div>
 			<div class="text-center">
-        <Button>
-          <SignIn provider="google" />
-        </Button>
+        <div class="grid grid-cols-2">
+			<Button>
+				<img src="google-logo.svg" width="25" height="25" alt="google logo"><SignIn provider="google" />
+			</Button>
+			|
+			<Button>
+				<img src="github-logo.svg" width="25" height="25" alt="github logo"><SignIn provider="github" />
+			</Button>
+		</div>
       </div>
 			<p class="text-muted-foreground px-8 text-center text-sm">
 				By clicking continue, you agree to our
