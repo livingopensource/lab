@@ -90,14 +90,18 @@
 	},
 	"dependencies": {
 		"@auth/sveltekit": "^1.7.4",
+		"@fontsource/jetbrains-mono": "^5.2.5",
+		"@fontsource/manrope": "^5.2.5",
 		"@kubernetes/client-node": "^1.0.0",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
 		"@tanstack/table-core": "^8.20.5",
+		"@types/reveal.js": "^5.0.5",
 		"marked": "^15.0.6",
 		"pg": "^8.13.1",
 		"pg-hstore": "^2.3.4",
+		"reveal.js": "^5.2.1",
 		"sequelize": "^6.37.5"
 	}
 }
