@@ -1,13 +1,16 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { navigating } from '$app/stores';
 	import { onMount } from 'svelte';
 
-	export let animationDuration = 250;
-	export let color: string = '#7fffd4';
-	export let height = 4;
+	interface Props {
+		animationDuration?: number;
+		color?: string;
+		height?: number;
+	}
 
-	let currentState: 'waiting' | 'loading' | 'doneLoading' | 'cleanupLoading' = 'waiting';
+	let { animationDuration = 250, color = '#7fffd4', height = 4 }: Props = $props();
+
+	let currentState: 'waiting' | 'loading' | 'doneLoading' | 'cleanupLoading' = $state('waiting');
 
 	let resetTimeout: number | undefined = undefined;
 

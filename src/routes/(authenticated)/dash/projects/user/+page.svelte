@@ -10,9 +10,13 @@
     import { formSchema } from "./schema";
 	import type { PageServerData } from "./$types";
 
-    export let data: PageServerData;
+   interface Props {
+      data: PageServerData;
+   }
 
-    $: instances = 0;
+   let { data }: Props = $props();
+
+    let instances = $derived(0);
 
     const form = superForm(data.form, {
       validators: zodClient(formSchema),

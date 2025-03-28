@@ -4,7 +4,7 @@
   import * as Form from "$lib/components/ui/form"
   import {Skeleton} from "$lib/components/ui/skeleton";
   import { Input } from "$lib/components/ui/input"
-  import { page } from "$app/stores";
+  import { page } from '$app/stores';
   import { nickName } from "$lib/helpers/misc.js";
   import { toast } from "svelte-sonner";
   import { goto } from "$app/navigation";

@@ -14,7 +14,6 @@
 	import { nickName } from "$lib/helpers/misc";
   import { useSidebar } from "$lib/components/ui/sidebar/index";
 	import { toggleMode } from "mode-watcher";
-	import CreditCard from "lucide-svelte/icons/credit-card";
 	import { Settings } from "lucide-svelte";
 
   let sidebar = useSidebar();

@@ -3,7 +3,11 @@
   import { Skeleton } from "$lib/components/ui/skeleton";
 	import Instances from "./instances.svelte";
 	import type { PageServerData } from "./$types";
-  export let data: PageServerData;
+  interface Props {
+    data: PageServerData;
+  }
+
+  let { data }: Props = $props();
 </script>
 
 <div class="container py-10 gap-5 place-content-evenly">

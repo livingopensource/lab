@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    let output = "";
+    let output = $state("");
     let command = "";
     
     function typeText(text: string, callback: { (): void; (): void; } | undefined) {
