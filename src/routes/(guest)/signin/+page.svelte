@@ -14,12 +14,18 @@
 				</p>
 			</div>
 			<div class="text-center">
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-2 gap-4">
 			<Button>
-				<img src="google-logo.svg" width="25" height="25" alt="google logo"><SignIn provider="google" />
+				<img src="google-logo.svg" width="25" height="25" alt="google logo">
+				<SignIn provider="google">
+					<p slot="submitButton">Google</p>
+				</SignIn>
 			</Button>
 			<Button>
-				<img src="github-logo.svg" width="25" height="25" alt="github logo"><SignIn provider="github" />
+				<img src="github-logo.svg" width="25" height="25" alt="github logo">
+				<SignIn provider="github">
+					<p slot="submitButton">Github</p>
+				</SignIn>
 			</Button>
 		</div>
       </div>
@@ -67,10 +73,16 @@
 		<div class="text-center">
         <div class="grid grid-cols-2 gap-4">
 			<Button>
-				<img src="/google-logo.svg" alt="google logo" width="25" height="25"><SignIn provider="google" />
+				<img src="/google-logo.svg" alt="google logo" width="25" height="25">
+				<SignIn provider="google">
+					<p slot="submitButton">Google</p>
+				</SignIn>
 			  </Button>
 			  <Button>
-				  <img src="/github-logo.svg" alt="github logo" width="25" height="25"><SignIn provider="github" />
+				  <img src="/github-logo.svg" alt="github logo" width="25" height="25">
+				  <SignIn provider="github">
+					<p slot="submitButton">Github</p>
+				</SignIn>
 			</Button>
 		</div>
       </div>
