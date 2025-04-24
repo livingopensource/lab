@@ -4,6 +4,7 @@
   import { formSchema } from "./schema";
   import type { PageServerLoad, Actions } from "./$types";
   
+  // TODO: ADD A UNIQUE IDENTIFIER TO YHE CHAT HISTORY
   // eslint-disable-next-line prefer-const
   let chatHistory: { role: 'user' | 'assistant'; content: string }[] = [];
   
