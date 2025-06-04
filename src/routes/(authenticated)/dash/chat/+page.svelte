@@ -1,6 +1,11 @@
 <script lang="ts">
   import { Textarea } from "$lib/components/ui/textarea";
   import { Button } from "$lib/components/ui/button";
+  import { Label } from "$lib/components/ui/label";
+  import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
+  import Paperclip from "lucide-svelte/icons/paperclip";
+  import Mic from "lucide-svelte/icons/mic";
+  import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import { marked } from "marked";
   import { toast } from "svelte-sonner";
 
@@ -95,21 +100,52 @@
 
 <div class="p-6 max-w-7xl mx-auto space-y-4">
 <div class="p-4 rounded h-full shadow space-y-2 h-96 overflow-y-auto">
-  {#each chat as msg (msg.content)}
-    <p class="p-2 inline-block rounded {msg.role === 'user' ? 'bg-blue-100 dark:bg-blue-900' : 'bg-gray-100 dark:bg-gray-900'}">
-      {@html marked(msg.content)}
-    </p>
-  {/each}
+  <div class="bg-muted/50 relative flex h-full min-h-[50vh] flex-col rounded-xl p-4 lg:col-span-2">
+       
+  <div class="flex-1">
+    
+    {#each chat as msg (msg.content)}
+      <p class="p-2 inline-block rounded {msg.role === 'user' ? 'bg-blue-100 dark:bg-blue-900' : 'bg-gray-100 dark:bg-gray-900'}">
+        {@html marked(msg.content)}
+      </p>
+    {/each}
+    
+    {#if currentAssistantMessage}
+      <p class="p-2 inline-block rounded dark:bg-gray-900 bg-gray-100'">
+        {@html marked(currentAssistantMessage)}
+      </p>
+    {/if}
+    
+  </div>
 
-  {#if currentAssistantMessage}
-    <p class="p-2 inline-block rounded dark:bg-gray-900 bg-gray-100'">
-      {@html marked(currentAssistantMessage)}
-    </p>
-  {/if}
-
-  <Textarea name="message" bind:value={input} placeholder="Type a message..." class="flex-1" />
-  <Button onclick={sendMessage} disabled={loading}>
-      {loading ? 'Thinking...' : 'Send'}
-  </Button>
+  <div
+     class="bg-background focus-within:ring-ring relative overflow-hidden rounded-lg border focus-within:ring-1"
+     data-x-chunk-name="dashboard-03-chunk-1"
+     data-x-chunk-description="A form for sending a message to an AI chatbot. The form has a textarea and buttons to upload files and record audio."
+   >
+     <Label for="message" class="sr-only">Message</Label>
+     <Textarea
+     bind:value={input} placeholder="Ask LOSF Trainer..." 
+       class="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
+     />
+     <div class="flex items-center p-3 pt-0">
+       <Tooltip.Root>
+         <Tooltip.Trigger>
+           <Button variant="ghost" size="icon" onclick={() => {
+            toast.error("Not implemented yet, coming soon");
+           }} >
+             <Mic class="size-4" />
+             <span class="sr-only">Use Microphone</span>
+           </Button>
+         </Tooltip.Trigger>
+         <Tooltip.Content side="top">Use Microphone</Tooltip.Content>
+       </Tooltip.Root>
+       <Button onclick={sendMessage} size="sm" class="ml-auto gap-1.5" disabled={loading}>
+        {loading ? 'Thinking...' : ''}
+         <CornerDownLeft class="size-4" />
+       </Button>
+     </div>
+  </div>
+  </div>
 </div>
 </div>
