@@ -1,7 +1,8 @@
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
-	const ollamaRes = await fetch('http://localhost:11434/api/chat', {
+	const ollamaRes = await fetch(`${env.OLLAMA_URL}/api/chat`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
