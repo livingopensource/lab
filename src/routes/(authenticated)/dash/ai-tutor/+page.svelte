@@ -161,7 +161,7 @@
     <div class="bg-muted/50 relative flex h-full min-h-[50vh] flex-col rounded-xl p-4 lg:col-span-2">
          
       <div class="flex-1">
-        <div bind:this={chatContainer} class="p-4 rounded h-full shadow space-y-2 h-96 overflow-y-auto">
+        <div bind:this={chatContainer} class="p-4 rounded shadow space-y-2 h-[60lvh] overflow-y-auto">
           {#each chat as msg (msg.content + msg.role)}
             {#if msg.type === 'text'}
               <p class="p-2 inline-block rounded {msg.role === 'user' ? 'bg-blue-100 dark:bg-blue-900' : ''}">
