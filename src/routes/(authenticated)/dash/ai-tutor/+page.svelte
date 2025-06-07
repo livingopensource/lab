@@ -150,6 +150,13 @@
           loading = false;
       }
   }
+
+  async function enterKey(event: Event) {
+    //@ts-ignore
+    if (event.code === "Enter") {
+      await sendMessage();
+    }
+  }
 </script>
 
 <svelte:head>
@@ -180,7 +187,8 @@
       </div>
 
       <div class="flex gap-2 items-end">
-        <Textarea
+      <Textarea
+      onkeypress={enterKey}
      bind:value={input} placeholder="Ask LOSF Trainer..." 
        class="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
      />
