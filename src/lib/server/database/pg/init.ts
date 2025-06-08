@@ -1,14 +1,8 @@
-import { Sequelize } from "sequelize";
-import { env } from "$env/dynamic/private";
+import { env } from '$env/dynamic/private'
+import { Pool } from 'pg'
 
-const sequelize = new Sequelize(env.DBName ?? '', env.User ?? '', env.Password ?? '', {
-    host: env.Host ?? '',
-    dialect: 'postgres',
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
-    },
-})
+const pool = new Pool({
+    connectionString: env.DATABASE_URL,
+});
 
-export {sequelize as DBConn}
+export default pool
