@@ -6,6 +6,7 @@
   import ChevronUp from "lucide-svelte/icons/chevron-up";
   import Container from "lucide-svelte/icons/container";
   import LogOut from "lucide-svelte/icons/log-out";
+  import Bot from "lucide-svelte/icons/bot";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index";
   import * as Avatar from "$lib/components/ui/avatar/index"
@@ -39,6 +40,11 @@
       title: "Kubernetes",
       url: "/dash/kubernetes",
       icon: Container,
+     },
+     {
+      title: "AI Tutor",
+      url: "/dash/ai-tutor",
+      icon: Bot,
      },
      {
       title: "Library",

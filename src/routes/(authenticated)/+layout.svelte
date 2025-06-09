@@ -3,11 +3,19 @@
   import AppSidebar from "$lib/components/app-sidebar.svelte";
   import Slash from "lucide-svelte/icons/slash";
   import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
+  import { Textarea } from "$lib/components/ui/textarea";
+  import { buttonVariants } from "$lib/components/ui/button/index.js";
+  import * as Sheet from "$lib/components/ui/sheet/index";
   import { derived } from "svelte/store";
   import { page } from "$app/stores";
   import { Toaster } from "$lib/components/ui/sonner";
 	import { Separator } from '$lib/components/ui/separator';
 	import { truncateString } from "$lib/utils";
+	import { Button } from "$lib/components/ui/button";
+	import { ArrowUp } from "lucide-svelte";
+	import { superForm } from "sveltekit-superforms";
+	import { zodClient } from "sveltekit-superforms/adapters";
+	import { formSchema } from "./dash/chat/schema";
   // Generate breadcrumb items from the current URL
   const breadcrumbItems = derived(page, ($page) => {
     const segments = $page.url.pathname.split('/').filter(Boolean);
@@ -17,7 +25,19 @@
     }));
   });
    
-  let { children } = $props();
+  let { children, data } = $props();
+
+  let response = $state("")
+
+
+  const formData = superForm(data.form, {
+    validators: zodClient(formSchema),
+    onUpdated: ({ form: f }) => {
+      response = f.message
+    }
+  });
+
+  const { form, enhance, errors} = formData;
 </script>
 
 <Toaster expand={true} richColors />
@@ -61,6 +81,37 @@
   </header>
 </Sidebar.Inset>
   <main class="w-screen py-10">
+    <Sheet.Root>
+      <Sheet.Trigger class={buttonVariants({ variant: "ghost" })}
+        >Ask AI!</Sheet.Trigger
+      >
+      <Sheet.Content side="right">
+        <Sheet.Header>
+          <Sheet.Title>Virtual Trainer</Sheet.Title>
+          <Sheet.Description>
+            Accessible Training at Your Fingertips on Linux, Docker, and Kubernetes.
+          </Sheet.Description>
+        </Sheet.Header>
+        <div class="grid gap-4 py-4">
+          <form action="/dash/chat" method="POST" use:enhance>
+            <div class="items-center gap-4">
+              {@html response}
+            </div>
+            <div class="items-center gap-4">
+              <Textarea name="message" value="Hi!" class="col-span-3" />
+            </div>
+            <div class="items-center gap-4 mt-4">
+              <Button type="submit">
+                <ArrowUp />
+              </Button> 
+            </div>
+          </form>
+        </div>
+        <Sheet.Footer>
+          <p>This is an experimental feature</p> 
+        </Sheet.Footer>
+      </Sheet.Content>
+    </Sheet.Root>
 	  {@render children?.()}
   </main>
 </Sidebar.Provider>
