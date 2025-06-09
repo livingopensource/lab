@@ -44,11 +44,16 @@ export const POST: RequestHandler = async ({ request }: { request: Request }) =>
 
 	console.log(res.rows);
 
+	let context: string = "";
+	for (let i = 0; i < res.rows.length; i++) {
+		context += res.rows[i].chunk+"\n\n";
+	}
+
 	let chatHistory = payload;
 	// If a matching entry has been found in the db, add it to the chontext to use when answering the question
 	if (res.rows.length > 0) {
 		chatHistory = history;
-		const template = `Answer this question based only on this Context: \n ${res.rows[0].chunk} \nQuestion: ${chat.content}`;
+		const template = `Answer this question based only on this Context: \n ${context} \nQuestion: ${chat.content}`;
 		chatHistory.push({ role: "user", content: template });
 	} else {
 		chatHistory.push({ role: "user", content: chat.content});
