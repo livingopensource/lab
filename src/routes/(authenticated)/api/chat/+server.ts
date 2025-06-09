@@ -50,6 +50,8 @@ export const POST: RequestHandler = async ({ request }: { request: Request }) =>
 		chatHistory = history;
 		const template = `Answer this question based only on this Context: \n ${res.rows[0].chunk} \nQuestion: ${chat.content}`;
 		chatHistory.push({ role: "user", content: template });
+	} else {
+		chatHistory.push({ role: "user", content: chat.content});
 	}
 
 	const ollamaRes = await fetch(`${env.OLLAMA_HOST}/api/chat`, {
