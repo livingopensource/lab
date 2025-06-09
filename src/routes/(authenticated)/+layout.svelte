@@ -81,37 +81,6 @@
   </header>
 </Sidebar.Inset>
   <main class="w-screen py-10">
-    <Sheet.Root>
-      <Sheet.Trigger class={buttonVariants({ variant: "ghost" })}
-        >Ask AI!</Sheet.Trigger
-      >
-      <Sheet.Content side="right">
-        <Sheet.Header>
-          <Sheet.Title>Virtual Trainer</Sheet.Title>
-          <Sheet.Description>
-            Accessible Training at Your Fingertips on Linux, Docker, and Kubernetes.
-          </Sheet.Description>
-        </Sheet.Header>
-        <div class="grid gap-4 py-4">
-          <form action="/dash/chat" method="POST" use:enhance>
-            <div class="items-center gap-4">
-              {@html response}
-            </div>
-            <div class="items-center gap-4">
-              <Textarea name="message" value="Hi!" class="col-span-3" />
-            </div>
-            <div class="items-center gap-4 mt-4">
-              <Button type="submit">
-                <ArrowUp />
-              </Button> 
-            </div>
-          </form>
-        </div>
-        <Sheet.Footer>
-          <p>This is an experimental feature</p> 
-        </Sheet.Footer>
-      </Sheet.Content>
-    </Sheet.Root>
 	  {@render children?.()}
   </main>
 </Sidebar.Provider>
