@@ -40,7 +40,7 @@
               <Card.Root>
                   <Card.Header>
                       <Card.Title>{tutorial.title}</Card.Title>
-                      <Card.Description>{tutorial.contents}</Card.Description>
+                      <Card.Description></Card.Description>
                   </Card.Header>
                   <Card.Content>
                     <Book />
