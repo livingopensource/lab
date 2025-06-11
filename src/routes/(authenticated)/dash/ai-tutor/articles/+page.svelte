@@ -19,8 +19,8 @@
         <div class="flex h-5 items-center space-x-4 text-sm">
         </div>
         <div>
-          <Button class="float-right" href="/dash/lessons/new">
-            Create New Tutorial
+          <Button class="float-right" href="/dash/ai-tutor/articles/create">
+            Create New Article
           </Button>
         </div>
       </div>
@@ -33,8 +33,8 @@
            {#each tutorials as tutorial}
            <button
                 type="button"
-                onclick={() => goto(`/dash/lessons/${tutorial.id}`)}
-                onkeydown={(e) => e.key === 'Enter' && goto(`/dash/lessons/${tutorial.id}`)}
+                onclick={() => goto(`/dash/ai-tutor/articles/${tutorial.id}`)}
+                onkeydown={(e) => e.key === 'Enter' && goto(`/dash/ai-tutor/articles/${tutorial.id}`)}
                 class="text-left w-full"
             >
               <Card.Root>
