@@ -1,15 +1,14 @@
 <script lang="ts">
-    import * as Form from "$lib/components/ui/form/index.js";
-    import { Input } from "$lib/components/ui/input/index.js";
-    import { formSchema } from "../[id]/schema";
-    import {
-      superForm,
-    } from "sveltekit-superforms";
-    import { zodClient } from "sveltekit-superforms/adapters";
-	import ShadEditor from "$lib/components/shad-editor/shad-editor.svelte";
-    import { Button } from "$lib/components/ui/button";
+  import * as Form from "$lib/components/ui/form/index.js";
+  import { Input } from "$lib/components/ui/input/index.js";
+  import { formSchema } from "../[id]/schema";
+  import {
+    superForm,
+  } from "sveltekit-superforms";
+  import { zodClient } from "sveltekit-superforms/adapters";
+  import { Textarea } from "$lib/components/ui/textarea/index.js";
+  import { Button } from "$lib/components/ui/button";
 	import type { PageServerData } from "./$types";
-	import { enhance as formEnhance } from "$app/forms";
 	import { toast } from "svelte-sonner";
 	import { goto } from "$app/navigation";
 
@@ -40,7 +39,7 @@
 </svelte:head>
 
 <div class="container py-10">
-    <main class="my-10 flex h-full w-full flex-col items-center justify-center">
+    <main class="my-10 h-full w-full flex-col items-center justify-center">
         <form method="POST" use:enhance>
             <Form.Field {form} name="title">
               <Form.Control>
@@ -57,8 +56,7 @@
                 <Form.Control>
                   {#snippet children({ props })}
                     <Form.Label>Content</Form.Label>
-                    <Input type="hidden" {...props} bind:value={$formData.contents} />
-                    <ShadEditor class="h-[40rem] w-full"  bind:content={$formData.contents} />
+                    <Textarea {...props} bind:value={$formData.contents} placeholder="Write your article here ..." class="min-h-96 border-0 p-3 shadow-none focus-visible:ring-0"/>
                   {/snippet}
                 </Form.Control>
                 <Form.Description>The Content field.</Form.Description>
