@@ -22,7 +22,7 @@
       if (f.valid) {
         toast.success(`Creating ${f.data.title} articles`);
         setTimeout(() => {
-          goto("/dash/lessons")
+          goto("/dash/ai-tutor/articles");
         }, 3000);
       } else {
         toast.error("Please fix the errors in the form.");
