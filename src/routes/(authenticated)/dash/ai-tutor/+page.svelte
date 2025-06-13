@@ -7,7 +7,11 @@
   import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import Mic from "lucide-svelte/icons/mic";
+	import type { PageServerData } from "./$types";
 
+  let {data}: {
+      data: PageServerData
+    } = $props()
   // Strongly type the chat messages, matching Ollama's expected format
   type ChatMessage = {
       role: 'user' | 'assistant' | 'system';
@@ -164,6 +168,17 @@
 </svelte:head>
 
 <div class="p-6 max-w-7xl mx-auto space-y-4">
+  <div class="grid grid-cols-2 gap-4 place-content-between">
+    <div class="flex h-5 items-center space-x-4 text-sm">
+    </div>
+    <div>
+      {#if data.isAdmin}
+      <Button class="float-right" href="/dash/ai-tutor/articles">
+        Articles
+      </Button>
+      {/if}
+    </div>
+  </div>
   <div class="p-4 rounded h-full shadow space-y-2 h-96 overflow-yidden">
     <div class="bg-muted/50 relative flex h-full min-h-[50vh] flex-col rounded-xl p-4 lg:col-span-2">
          
