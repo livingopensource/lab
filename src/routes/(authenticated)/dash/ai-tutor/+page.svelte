@@ -5,6 +5,7 @@
   import { toast } from "svelte-sonner";
   import { tick } from 'svelte';
   import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
+  import LoaderPinwheel from "lucide-svelte/icons/loader-pinwheel";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import Mic from "lucide-svelte/icons/mic";
 	import type { PageServerData } from "./$types";
@@ -220,8 +221,11 @@
           <Tooltip.Content side="top">Use Microphone</Tooltip.Content>
         </Tooltip.Root>
         <Button onclick={sendMessage} size="sm" class="ml-auto gap-1.5" disabled={loading}>
-         {loading ? 'Thinking...' : ''}
+         {#if loading}
+          <LoaderPinwheel class="animate-spin" />
+        {:else}
           <CornerDownLeft class="size-4" />
+         {/if}
         </Button>
        </div>
       </div>

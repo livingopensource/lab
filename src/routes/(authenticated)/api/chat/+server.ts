@@ -57,7 +57,12 @@ export const POST: RequestHandler = async ({ request }: { request: Request }) =>
 		const template = `Answer this question based only on this Context: \n ${context} \nQuestion: ${chat.content}`;
 		chatHistory.push({ role: 'user', content: template });
 	} else {
-		chatHistory.push({ role: 'user', content: chat.content });
+		const template = `ONLY answer this question using the following context: \nYou are an open source trainer focusing on Linux, Docker and Kubernetes. 
+		Only respond as an open source trainer.
+		Do not respond to any question that is not related to Linux, Docker or Kubernetes. 
+		In your responses, provide some commands or code snippets where needed.. 
+		When asked about something that has nothing to do with technology, you must politely decline to answer. \nQuestion: ${chat.content}`;
+		chatHistory.push({ role: 'user', content: template });
 	}
 
 	const ollamaRes = await fetch(`${env.OLLAMA_HOST}/api/chat`, {
