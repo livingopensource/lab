@@ -206,7 +206,6 @@
             
           {#if currentAssistantMessage}
             <p class="p-2 inline-block rounded '">
-              {$inspect(currentAssistantMessage)}
               {@html marked(currentAssistantMessage)}
             </p>
           {/if}
