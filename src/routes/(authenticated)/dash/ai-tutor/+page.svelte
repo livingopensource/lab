@@ -4,6 +4,16 @@
   import { marked } from "marked";
   import { toast } from "svelte-sonner";
   import { tick } from 'svelte';
+  import Prism from 'prismjs';
+  import 'prismjs';
+  import 'prismjs/themes/prism-twilight.css'; // or prism-dark.css, prism-tomorrow.css, etc.
+  import 'prismjs/components/prism-yaml.js';
+  import 'prismjs/components/prism-javascript';
+  import 'prismjs/components/prism-typescript';
+  import 'prismjs/components/prism-python';
+  import 'prismjs/components/prism-bash';
+  import 'prismjs/components/prism-json';
+
   import CornerDownLeft from "lucide-svelte/icons/corner-down-left";
   import LoaderCircle from "lucide-svelte/icons/loader-circle";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
@@ -196,6 +206,7 @@
             
           {#if currentAssistantMessage}
             <p class="p-2 inline-block rounded '">
+              {$inspect(currentAssistantMessage)}
               {@html marked(currentAssistantMessage)}
             </p>
           {/if}

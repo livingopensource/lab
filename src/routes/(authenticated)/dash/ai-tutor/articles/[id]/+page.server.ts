@@ -28,7 +28,7 @@ export async function load({locals, params}) {
 }
 
 export const actions = {
-	default: async (event) => {
+	update: async (event) => {
         const session = await event.locals.auth()
         if (!session) {
           throw redirect(303, '/signin')
@@ -49,5 +49,27 @@ export const actions = {
         return {
           form,
         };
-      }
+      },
+
+  delete: async (event) => {
+    const session = await event.locals.auth();
+     if (!session) {
+       throw redirect(303, '/signin');
+     }
+
+     const { id } = event.params;
+
+     const result = await pool.query(
+       `DELETE FROM tutorials WHERE id = $1`,
+       [id]
+     );
+
+     if (result.rowCount === 0) {
+       return fail(404, { message: 'Article not found' });
+     }
+
+     // Redirect after successful delete (adjust the path as needed)
+     throw redirect(303, '/dash/ai-tutor/articles');
+  }
+
     }
